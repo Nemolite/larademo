@@ -1,7 +1,9 @@
 @extends('basa')
-
+@section('sidebar')
+    sidebar
+@endsection
 @section('content')
-    test
+    content
 @endsection
 
 

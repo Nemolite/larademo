@@ -9,8 +9,46 @@
     <title>Document</title>
 </head>
 <body>
+<header class="header">
+    <div class="header-main">
+        <div class="headre-logo">
+            <a href="{{ route('index') }}">
+                <img src="{{ asset("images/logo.png") }}" alt="Логотип">
+            </a>
+        </div>
+        <div class="header-menu">
+            <nav>
+                <ul>
+                    <li><a href="{{ route('index') }}">Главная</a></li>
+                    <li><a href="{{ route('cart') }}">Корзина</a></li>
+                    <li><a href="{{ route('account') }}">Аккаунт</a></li>
+                    <li><a href="{{ route('contacts') }}">Наши контакты</a></li>
 
-@yield('content')
+                </ul>
+            </nav>
+        </div>
+        <div class="header-login"></div>
+    </div>
+</header>
+    <div class="main">
+        <div class="main-sidebar">
+            @yield('sidebar')
+        </div>
+        <div class="main-content">
+            @yield('content')
+        </div>
+    </div>
+<footer class="footer">
+    <div class="footer-main">
+        <div class="footer-left">
+
+        </div>
+        <div class="footer-mid"></div>
+        <div class="footer-right"></div>
+    </div>
+</footer>
+
+
 <script src="{{ asset("js/script.js") }}"></script>
 </body>
 </html>
