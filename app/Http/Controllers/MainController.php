@@ -74,4 +74,9 @@ class MainController extends Controller
 
         return view('index', $data );
     }
+
+    public function account(){
+
+        return view('account');
+    }
 }

@@ -30,7 +30,9 @@
         <div class="header-login"></div>
     </div>
 </header>
+
     <div class="main">
+        @yield('account')
         <div class="main-sidebar">
             @yield('sidebar')
         </div>

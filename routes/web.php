@@ -33,3 +33,7 @@ Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts']
 Route::get('/category/{id}',[\App\Http\Controllers\MainController::class, 'category'])->name('category');
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
