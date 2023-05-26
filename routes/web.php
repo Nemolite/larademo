@@ -18,13 +18,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
-
+/**
+ * Helper route
+ */
+Route::get('/add',[\App\Http\Controllers\MainController::class, 'add'])->name('add');
+/**
+ * Маршруты
+ */
 Route::get('/index',[\App\Http\Controllers\MainController::class, 'index'])->name('index');
 Route::get('/cart',[\App\Http\Controllers\MainController::class, 'cart'])->name('cart');
 Route::get('/account',[\App\Http\Controllers\MainController::class, 'account'])->name('account');
 Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts'])->name('contacts');
 
-/**
- * Helper route
- */
-Route::get('/add',[\App\Http\Controllers\MainController::class, 'add'])->name('add');
+Route::get('/category/{id}',[\App\Http\Controllers\MainController::class, 'category'])->name('category');
+
+

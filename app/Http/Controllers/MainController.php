@@ -10,7 +10,7 @@ class MainController extends Controller
 {
     public function index(){
         $category = Category::all();
-        
+
         $product = Product::all();
 
         $data = [
@@ -59,5 +59,19 @@ class MainController extends Controller
         $product3->categories()->attach($categories3);
 
         return view('index');
+    }
+
+    public function category($id){
+        $cat = Category::find($id);
+        $product = $cat->products; // вернет все продукты для категории $id
+
+        $category = Category::all();
+
+        $data = [
+            'category'=> $category,
+            'product'=> $product,
+        ];
+
+        return view('index', $data );
     }
 }

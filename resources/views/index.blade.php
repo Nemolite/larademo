@@ -1,8 +1,9 @@
 @extends('basa')
 @section('sidebar')
+    <h2><a href="{{ route('index') }}">Все категории</a></h2>
     @isset($category)
         @foreach ($category as $cat)
-            <h2>{{ $cat->name }}</h2>
+            <h2><a href="{{ route('category',$cat->id) }}">{{ $cat->name }}</a></h2>
         @endforeach
     @endisset
 @endsection
