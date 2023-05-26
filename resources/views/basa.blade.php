@@ -27,7 +27,9 @@
                 </ul>
             </nav>
         </div>
-        <div class="header-login"></div>
+        <div class="header-login">
+            <p><a href="{{ route('register') }}">Регистрация</a> / <a href="{{ route('home') }}">Вход</a></p>
+        </div>
     </div>
 </header>
 

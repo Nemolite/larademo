@@ -48,6 +48,13 @@ nav {
 .header-login {
     width: 20%;
     height: 80px;
+    padding-top: 10px;
+}
+
+.header-login a {
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
 }
 
 .main {
