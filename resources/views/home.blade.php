@@ -23,14 +23,28 @@
 <div class="container addcat">
     <div class="row">
         <div class="col-4">
-            Список категории
             @isset($category_all)
+                <h1>Список категории</h1>
                 @foreach ($category_all as $category)
                     <h2>{{ $category->name }}</h2>
                     <p>{{ $category->description }}</p>
+                   <div class="category-forms">
+                    <form method="post" action="{{ route('updatecategory') }}">
+                        @csrf
+                        <input type="hidden" name="upid" value="{{ $category->id }}">
+                        <button type="submit" class="btn btn-warning updatecategory" data-updatecategoryid="{{ $category->id }}">Изменить</button>
+                    </form>
+                    <form method="post" action="{{ route('deletecategory') }}">
+                        @csrf
+                        <input type="hidden" name="delid" value="{{ $category->id }}">
+                        <button type="submit" class="btn btn-danger deletecategory">Удалить</button>
+                    </form>
+                   </div>
                 @endforeach
                     {{ $category_all->links() }}
             @endisset
+                <p id="result_output"></p>
+
         </div> <!-- col-4-->
         <div class="col-8">
             <h1>Добавить категорию товара</h1>

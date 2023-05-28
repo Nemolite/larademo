@@ -27,6 +27,16 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function category(){
+        $category_all = Category::paginate(5);
+        $data = [
+
+            'category_all'=>$category_all
+        ];
+
+        return view('home',$data);
+    }
+
     public function addcategory(Request $request){
 
         if ($request->method()=='POST'){
@@ -40,13 +50,24 @@ class HomeController extends Controller
             $msg = '';
         }
 
+        /**
+         * Вывод списка категорий
+         */
         $category_all = Category::paginate(5);
          $data = [
              'msg'=>$msg,
              'category_all'=>$category_all
          ];
-
         return view('home',$data);
+    }
 
+    public function deletecategory(Request $request){
+        $id = $request->delid;
+        $check = Category::find($id)->delete();
+        if ($check) {
+            return response('Категория удалена');
+        } else {
+            return response('Что-то пошло не так');
+        }
     }
 }

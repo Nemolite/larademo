@@ -35,7 +35,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                            <li><a href="{{ route('category') }}">Категории товаров</a></li>
+                            <li><a href="">Товары</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -81,5 +82,6 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/admin.js') }}" defer></script>
 </body>
 </html>

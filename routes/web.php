@@ -35,5 +35,8 @@ Route::get('/category/{id}',[\App\Http\Controllers\MainController::class, 'categ
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/category', [App\Http\Controllers\HomeController::class, 'category'])->name('category');
 Route::post('/addcategory', [App\Http\Controllers\HomeController::class, 'addcategory'])->name('addcategory');
 Route::get('/addcategory', [App\Http\Controllers\HomeController::class, 'addcategory'])->name('addcategory');
+Route::get('/updatecategory', [App\Http\Controllers\HomeController::class, 'updatecategory'])->name('updatecategory');
+Route::post('/deletecategory', [App\Http\Controllers\HomeController::class, 'deletecategory'])->name('deletecategory');
