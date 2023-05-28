@@ -25,7 +25,7 @@ Route::get('/add',[\App\Http\Controllers\MainController::class, 'add'])->name('a
 /**
  * Маршруты
  */
-Route::get('/index',[\App\Http\Controllers\MainController::class, 'index'])->name('index');
+Route::get('/',[\App\Http\Controllers\MainController::class, 'index'])->name('index');
 Route::get('/cart',[\App\Http\Controllers\MainController::class, 'cart'])->name('cart');
 Route::get('/account',[\App\Http\Controllers\MainController::class, 'account'])->name('account');
 Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts'])->name('contacts');
@@ -33,7 +33,5 @@ Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts']
 Route::get('/category/{id}',[\App\Http\Controllers\MainController::class, 'category'])->name('category');
 
 
-
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
