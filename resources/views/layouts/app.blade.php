@@ -80,6 +80,7 @@
 
         <main class="py-4">
             @yield('content')
+            @yield('updatecategory')
         </main>
     </div>
     <script src="{{ asset('js/admin.js') }}" defer></script>

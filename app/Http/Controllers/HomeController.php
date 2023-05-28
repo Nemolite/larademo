@@ -70,4 +70,20 @@ class HomeController extends Controller
             return response('Что-то пошло не так');
         }
     }
+
+    public function updatecategory($id){
+        $category = Category::find($id);
+        $data = [
+            'category'=>$category
+        ];
+        return view('updatecategory',$data);
+    }
+
+    public function updatecat(Request $request){
+        $category = Category::find($request->upid);
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->save();
+        return redirect('category');
+    }
 }

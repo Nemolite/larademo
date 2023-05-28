@@ -38,5 +38,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/category', [App\Http\Controllers\HomeController::class, 'category'])->name('category');
 Route::post('/addcategory', [App\Http\Controllers\HomeController::class, 'addcategory'])->name('addcategory');
 Route::get('/addcategory', [App\Http\Controllers\HomeController::class, 'addcategory'])->name('addcategory');
-Route::get('/updatecategory', [App\Http\Controllers\HomeController::class, 'updatecategory'])->name('updatecategory');
+Route::get('/updatecategory/{id}', [App\Http\Controllers\HomeController::class, 'updatecategory'])->name('updatecategory');
+Route::post('/updatecat', [App\Http\Controllers\HomeController::class, 'updatecat'])->name('updatecat');
 Route::post('/deletecategory', [App\Http\Controllers\HomeController::class, 'deletecategory'])->name('deletecategory');

@@ -29,11 +29,7 @@
                     <h2>{{ $category->name }}</h2>
                     <p>{{ $category->description }}</p>
                    <div class="category-forms">
-                    <form method="post" action="{{ route('updatecategory') }}">
-                        @csrf
-                        <input type="hidden" name="upid" value="{{ $category->id }}">
-                        <button type="submit" class="btn btn-warning updatecategory" data-updatecategoryid="{{ $category->id }}">Изменить</button>
-                    </form>
+                       <a href="{{ route('updatecategory',$category->id) }}"><button type="submit" class="btn btn-warning">Изменить</button></a>
                     <form method="post" action="{{ route('deletecategory') }}">
                         @csrf
                         <input type="hidden" name="delid" value="{{ $category->id }}">
@@ -69,3 +65,4 @@
     </div> <!-- row -->
 </div>
 @endsection
+
