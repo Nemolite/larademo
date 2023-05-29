@@ -15,6 +15,12 @@
             <p>{{ $prod->price }}</p>
             <p>{{ $prod->country }}</p>
             <p>{{ $prod->description }}</p>
+            @isset($prod->image)
+                <div class="main-content-img">
+                    <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
+                </div>
+            @endisset
+
         @endforeach
 
    @endisset

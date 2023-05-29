@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -99,23 +100,26 @@ class HomeController extends Controller
     }
 
     public function addproduct(Request $request){
-        //$productform = $request->all();
+        $productform = $request->all();
+        $filename    = $productform['image']->getClientOriginalName();
+
+        $productform['image']->move(Storage::path('/public/images/'),$filename);
+        //$url = Storage::url($filename);
+
         $product = Product::create([
             'name'  =>  $request->name,
             'price' =>  $request->price,
             'description'=> $request->description,
+            'image' => $filename,
             'country'=> $request->country
+
         ]);
 
         $categories = Category::find($request->category);
         $product->categories()->attach($categories);
 
         $check = $product->save();
-        if ($check) {
-            $msg = 'Товар добавлен';
-        } else {
-            $msg = 'Что-то пошло не так';
-        }
-        return redirect('product')->with('status', 'Товар сохранен');;
+        $msg = $check ?'Товар сохранен':'Что-то пошло не так';
+        return redirect('product')->with('status', $msg);;
     }
 }
