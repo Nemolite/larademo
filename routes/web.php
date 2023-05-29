@@ -32,6 +32,9 @@ Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts']
 
 Route::get('/cat/{id}',[\App\Http\Controllers\MainController::class, 'cat'])->name('cat');
 
+Route::post('/cartproduct',[\App\Http\Controllers\MainController::class, 'cartproduct'])->name('cartproduct');
+
+
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/category', [App\Http\Controllers\HomeController::class, 'category'])->name('category');

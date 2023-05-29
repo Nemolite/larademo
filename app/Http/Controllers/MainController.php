@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
@@ -30,6 +31,28 @@ class MainController extends Controller
         ];
 
         return view('index', $data );
+    }
+
+    public function cartproduct(Request $request){
+        $id = $request->procuctid;
+        $product = Product::find($id);
+        $id = Auth::id();
+        $datasesion = [
+            'userid' =>$id,
+            'id'=>$product->id,
+            'price' =>$product->price,
+            'description' =>$product->description,
+            'image' =>$product->image,
+            'country' =>$product->country,
+        ];
+        session($datasesion);
+        return redirect('/');
+    }
+
+    public function cart(){
+        $id = session('id');
+        $userid = session('userid');
+        return view('cart',['id'=>$id,'userid'=>$userid]);
     }
 
 

@@ -12,21 +12,28 @@
     @isset($product)
 
         <div class="container">
-            <div class="row">
-                @foreach ($product as $prod)
-                    <div class="col-4 btn btn-outline-primary">
-                        <h2>{{ $prod->name }}</h2>
-                        <p>{{ $prod->price }}</p>
-                        <p>{{ $prod->country }}</p>
-                        <p>{{ $prod->description }}</p>
-                        @isset($prod->image)
-                            <div class="main-content-img">
-                                <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
-                            </div>
-                        @endisset
-                    </div>
-                @endforeach
-            </div>
+            <form method="post" action="{{ route('cartproduct') }}" id="cartproduct" name="cartproduct" >
+                @csrf
+                <div class="row">
+
+                    @foreach ($product as $prod)
+                        <div class="col-4">
+                            <h2>{{ $prod->name }}</h2>
+                            <p>{{ $prod->price }}</p>
+                            <p>{{ $prod->country }}</p>
+                            <p>{{ $prod->description }}</p>
+                            @isset($prod->image)
+                                <div class="main-content-img">
+                                    <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
+                                </div>
+                            @endisset
+                            <input type="hidden"  name="procuctid" value="{{ $prod->id }}">
+                            <button type="submit" class="btn btn-success">Добавить в корзину</button>
+                        </div>
+                    @endforeach
+
+                </div>
+            </form>
         </div>
 
         @if ($product->count()>=6 ) <!-- 6 - количество выводого товара -->
