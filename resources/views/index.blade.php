@@ -20,8 +20,10 @@
                     <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
                 </div>
             @endisset
-
         @endforeach
+        @if ($product->count()>=5 ) <!-- 5 - количество выводого товара -->
+            {{ $product->links() }}
+        @endif
 
    @endisset
 @endsection
