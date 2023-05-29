@@ -104,11 +104,11 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
-            @isset($msg)
+            @if (session('status'))
                 <div class="msg">
-                    <p>{{ $msg }}</p>
+                    <p>{{ session('status') }}</p>
                 </div>
-            @endisset
+            @endif
         @endisset
     </div><!-- class="col-8" -->
 

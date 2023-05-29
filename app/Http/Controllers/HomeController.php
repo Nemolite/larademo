@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -98,11 +99,23 @@ class HomeController extends Controller
     }
 
     public function addproduct(Request $request){
-        dd($request->all());
-        $category = Category::all();
-        $data = [
-            'catprod'=>$category
-        ];
-        return view('home',$data);
+        //$productform = $request->all();
+        $product = Product::create([
+            'name'  =>  $request->name,
+            'price' =>  $request->price,
+            'description'=> $request->description,
+            'country'=> $request->country
+        ]);
+
+        $categories = Category::find($request->category);
+        $product->categories()->attach($categories);
+
+        $check = $product->save();
+        if ($check) {
+            $msg = 'Товар добавлен';
+        } else {
+            $msg = 'Что-то пошло не так';
+        }
+        return redirect('product')->with('status', 'Товар сохранен');;
     }
 }
