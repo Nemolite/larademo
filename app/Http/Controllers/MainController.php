@@ -10,7 +10,7 @@ class MainController extends Controller
 {
     public function index(){
         $category = Category::paginate(5);
-        $product = Product::paginate(5);
+        $product = Product::paginate(6);
         $data = [
             'category'=> $category,
             'product'=> $product,

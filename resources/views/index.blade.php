@@ -10,18 +10,26 @@
 @endsection
 @section('content')
     @isset($product)
-        @foreach ($product as $prod)
-            <h2>{{ $prod->name }}</h2>
-            <p>{{ $prod->price }}</p>
-            <p>{{ $prod->country }}</p>
-            <p>{{ $prod->description }}</p>
-            @isset($prod->image)
-                <div class="main-content-img">
-                    <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
-                </div>
-            @endisset
-        @endforeach
-        @if ($product->count()>=5 ) <!-- 5 - количество выводого товара -->
+
+        <div class="container">
+            <div class="row">
+                @foreach ($product as $prod)
+                    <div class="col-4 btn btn-outline-primary">
+                        <h2>{{ $prod->name }}</h2>
+                        <p>{{ $prod->price }}</p>
+                        <p>{{ $prod->country }}</p>
+                        <p>{{ $prod->description }}</p>
+                        @isset($prod->image)
+                            <div class="main-content-img">
+                                <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
+                            </div>
+                        @endisset
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        @if ($product->count()>=6 ) <!-- 6 - количество выводого товара -->
             {{ $product->links() }}
         @endif
 
