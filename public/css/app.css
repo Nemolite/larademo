@@ -5,4 +5,9 @@
 .category-forms {
     display: flex;
     flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.menu-fix li {
+    margin-left: 10px;
 }

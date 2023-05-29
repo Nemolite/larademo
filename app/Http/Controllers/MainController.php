@@ -9,23 +9,20 @@ use Illuminate\Http\Request;
 class MainController extends Controller
 {
     public function index(){
-        $category = Category::all();
-
-        $product = Product::all();
-
+        $category = Category::paginate(5);
+        $product = Product::paginate(5);
         $data = [
             'category'=> $category,
             'product'=> $product,
         ];
-
         return view('index', $data );
     }
 
-    public function category($id){
+    public function cat($id){
         $cat = Category::find($id);
         $product = $cat->products; // вернет все продукты для категории $id
 
-        $category = Category::all();
+        $category = Category::paginate(5);
 
         $data = [
             'category'=> $category,

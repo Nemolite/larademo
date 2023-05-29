@@ -3,8 +3,9 @@
     @isset($category)
         <h2><a href="{{ route('index') }}">Все категории</a></h2>
         @foreach ($category as $cat)
-            <h2><a href="{{ route('category',$cat->id) }}">{{ $cat->name }}</a></h2>
+            <h2><a href="{{ route('cat',$cat->id) }}">{{ $cat->name }}</a></h2>
         @endforeach
+        {{ $category->links() }}
     @endisset
 @endsection
 @section('content')
@@ -15,5 +16,6 @@
             <p>{{ $prod->country }}</p>
             <p>{{ $prod->description }}</p>
         @endforeach
+
    @endisset
 @endsection

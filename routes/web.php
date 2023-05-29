@@ -30,7 +30,7 @@ Route::get('/cart',[\App\Http\Controllers\MainController::class, 'cart'])->name(
 Route::get('/account',[\App\Http\Controllers\MainController::class, 'account'])->name('account');
 Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts'])->name('contacts');
 
-Route::get('/category/{id}',[\App\Http\Controllers\MainController::class, 'category'])->name('category');
+Route::get('/cat/{id}',[\App\Http\Controllers\MainController::class, 'cat'])->name('cat');
 
 
 Auth::routes();
