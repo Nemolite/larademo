@@ -32,7 +32,6 @@ Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts']
 
 Route::get('/cat/{id}',[\App\Http\Controllers\MainController::class, 'cat'])->name('cat');
 
-
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/category', [App\Http\Controllers\HomeController::class, 'category'])->name('category');
@@ -41,3 +40,9 @@ Route::get('/addcategory', [App\Http\Controllers\HomeController::class, 'addcate
 Route::get('/updatecategory/{id}', [App\Http\Controllers\HomeController::class, 'updatecategory'])->name('updatecategory');
 Route::post('/updatecat', [App\Http\Controllers\HomeController::class, 'updatecat'])->name('updatecat');
 Route::post('/deletecategory', [App\Http\Controllers\HomeController::class, 'deletecategory'])->name('deletecategory');
+
+/**
+ * Работа с товаром
+ */
+Route::get('/product',[\App\Http\Controllers\HomeController::class, 'product'])->name('product');
+Route::post('/addproduct',[\App\Http\Controllers\HomeController::class, 'addproduct'])->name('addproduct');

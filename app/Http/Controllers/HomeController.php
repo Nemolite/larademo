@@ -86,4 +86,23 @@ class HomeController extends Controller
         $category->save();
         return redirect('category');
     }
+    /**
+     * Работа с товаром
+     */
+    public function product(){
+        $category = Category::all();
+        $data = [
+            'catprod'=>$category
+        ];
+        return view('home',$data);
+    }
+
+    public function addproduct(Request $request){
+        dd($request->all());
+        $category = Category::all();
+        $data = [
+            'catprod'=>$category
+        ];
+        return view('home',$data);
+    }
 }

@@ -36,7 +36,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto menu-fix">
                             <li><a href="{{ route('category') }}">Категории товаров</a></li>
-                            <li><a href="">Товары</a></li>
+                            <li><a href="{{ route('product') }}">Товары</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
