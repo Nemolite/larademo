@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
@@ -21,8 +22,14 @@ class MainController extends Controller
 
     public function cat($id){
         $cat = Category::find($id);
-        $product = $cat->products; // вернет все продукты для категории $id
+        $product_cat = $cat->products; // вернет все продукты для категории $id
+        $product_ids = [];
+       foreach ($product_cat as $prod){
+           $product_ids[] =  $prod->id;
+       }
 
+        //$product = Product::find($product_ids)->paginate(6);
+        $product= DB::table('products')->whereIn('id', $product_ids)->paginate(6);
         $category = Category::paginate(5);
 
         $data = [
@@ -50,6 +57,7 @@ class MainController extends Controller
     }
 
     public function cart(){
+        //dd(session());
         $id = session('id');
         $userid = session('userid');
         return view('cart',['id'=>$id,'userid'=>$userid]);

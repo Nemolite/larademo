@@ -36,6 +36,7 @@
 
     <div class="main">
         @yield('account')
+        @yield('cart')
         <div class="main-sidebar">
             @yield('sidebar')
         </div>

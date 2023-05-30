@@ -35,10 +35,8 @@
                 </div>
             </form>
         </div>
-
-        @if ($product->count()>=6 ) <!-- 6 - количество выводого товара -->
-            {{ $product->links() }}
-        @endif
-
+            @if ($product->count()>=6 ) <!-- 6 - количество выводого товара -->
+                {{ $product->links() }}
+            @endif
    @endisset
 @endsection
