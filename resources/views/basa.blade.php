@@ -29,7 +29,21 @@
             </nav>
         </div>
         <div class="header-login">
-            <p><a href="{{ route('register') }}">Регистрация</a> / <a href="{{ route('home') }}">Вход</a></p>
+            @guest
+            <p><a href="{{ route('register') }}">{{ __('Регистрация') }}</a> / <a href="{{ route('home') }}">{{ __('Вход') }}</a></p>
+            @else
+                <p>Привет, {{ Auth::user()->name }}
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        {{ __('Выход') }}
+                    </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+                </p>
+            @endguest
         </div>
     </div>
 </header>
@@ -47,7 +61,7 @@
 <footer class="footer">
     <div class="footer-main">
         <div class="footer-left">
-
+            <a href="{{ route('home') }}">{{ __('Админка') }}</a></p>
         </div>
         <div class="footer-mid"></div>
         <div class="footer-right"></div>
