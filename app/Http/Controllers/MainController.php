@@ -27,8 +27,10 @@ class MainController extends Controller
        foreach ($product_cat as $prod){
            $product_ids[] =  $prod->id;
        }
-        //$product = Product::find($product_ids)->paginate(6); // так нельзя - это ошибка
-        $product= DB::table('products')->whereIn('id', $product_ids)->paginate(6);
+        $product = Product::query()
+            ->whereIn('id', $product_ids)
+            ->paginate(6);
+        //$product= DB::table('products')->whereIn('id', $product_ids)->paginate(6);
         $category = Category::paginate(5);
 
         $data = [

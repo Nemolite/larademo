@@ -21,8 +21,10 @@
             <nav>
                 <ul>
                     <li><a href="{{ route('index') }}">Главная</a></li>
+                    @auth
                     <li><a href="{{ route('cart') }}">Корзина</a></li>
                     <li><a href="{{ route('account') }}">Аккаунт</a></li>
+                    @endauth
                     <li><a href="{{ route('contacts') }}">Наши контакты</a></li>
 
                 </ul>
