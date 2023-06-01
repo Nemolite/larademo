@@ -63,7 +63,9 @@
 <footer class="footer">
     <div class="footer-main">
         <div class="footer-left">
+            @auth
             <a href="{{ route('home') }}">{{ __('Админка') }}</a></p>
+            @endauth
         </div>
         <div class="footer-mid"></div>
         <div class="footer-right"></div>

@@ -59,9 +59,11 @@ nav {
 
 .main {
     width: 80%;
+    min-height: calc(100vh - 200px);
     margin: 0 auto;
     display: flex;
     flex-direction: row;
+    margin-bottom: 20px;
 }
 .main-sidebar {
     width: 30%;
@@ -116,4 +118,8 @@ nav {
 .container-product-item {
     width: 33%;
     float: left;
+}
+
+.footer-left a {
+    color: white;
 }
