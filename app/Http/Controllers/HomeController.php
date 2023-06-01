@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -26,7 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $rols = Auth::user()->rols;
+        if ($rols){
+            return view('home');
+        } else {
+            return redirect('account');
+        }
+
     }
 
     public function category(){
