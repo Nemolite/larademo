@@ -60,6 +60,7 @@
             @yield('cart')
             @yield('orders')
             @yield('checkout')
+            @yield('contacts')
         </div>
     </div>
 <footer class="footer">

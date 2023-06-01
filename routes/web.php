@@ -25,6 +25,7 @@ Route::get('/',[\App\Http\Controllers\MainController::class, 'index'])->name('in
 Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts'])->name('contacts');
 Route::get('/cat/{id}',[\App\Http\Controllers\MainController::class, 'cat'])->name('cat');
 Route::post('/cartproduct',[\App\Http\Controllers\MainController::class, 'cartproduct'])->name('cartproduct');
+Route::post('/contacts',[\App\Http\Controllers\MainController::class, 'contacts'])->name('contacts');
 
 
 Auth::routes();
