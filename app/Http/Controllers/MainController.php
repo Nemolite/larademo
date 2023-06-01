@@ -43,45 +43,32 @@ class MainController extends Controller
 
     // Добавление товара в корзину
     public function cartproduct(Request $request){
-        dd($request);
-        $tmp = $request->all();
-        dd($tmp);
         $prodid = $request->prodid;
-        //dd($prodid);
-        $product = Product::find($productid);
-        //dd($product);
+        $product = Product::find($prodid);
         $userid = Auth::id();
         $datasesion = [
-            'userid'=>$userid,
             'id'=>$prodid,
+            'name'=>$product->name,
             'price' =>$product->price,
             'description' =>$product->description,
             'image' =>$product->image,
             'country' =>$product->country,
         ];
-        //session([$userid =>$datasesion]);
-        session()->push($datasesion);
+
+        session()->push($userid,$datasesion);
         return redirect('/');
     }
 
     public function cart(){
-        //session()->flush();
-        dd(session()->all());
-        $products = session()->all();
-        //dd($products[0]);
-        //dd(session()->get('userid'));
         $userid = Auth::id();
-        if (session()->get('userid')==$userid){
-
-        }
-        $userid = session('userid');
-
-
+        //dd(session()->get($userid));
         $productid = session('id');
         $data = [
+            'user' => Auth::user()->name,
             'id'=>$productid,
             'userid'=>$userid,
-            'sessionid'=>session()->getId()
+            'sessionid'=>session()->getId(),
+            'products' => session()->get($userid)
         ];
         return view('cart',$data);
     }
