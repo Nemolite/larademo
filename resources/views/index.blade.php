@@ -12,8 +12,8 @@
     @isset($product)
 
         <div class="container">
-            <form method="post" action="{{ route('cartproduct') }}" id="cartproduct" name="cartproduct" >
-                @csrf
+
+
                 <div class="row">
 
                     @foreach ($product as $prod)
@@ -27,13 +27,16 @@
                                     <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
                                 </div>
                             @endisset
-                            <input type="hidden"  name="procuctid" value="{{ $prod->id }}">
-                            <button type="submit" class="btn btn-success">Добавить в корзину</button>
+                            <form method="post" action="{{ route('cartproduct') }}">
+                                @csrf
+                                <input type="hidden"  name="prodid" value="{{ $prod->id }}">
+                                <button type="submit" class="btn btn-success">Добавить в корзину</button>
+                            </form>
                         </div>
                     @endforeach
 
                 </div>
-            </form>
+
         </div>
             @if ($product->count()>=6 ) <!-- 6 - количество выводого товара -->
                 {{ $product->links() }}

@@ -51,13 +51,13 @@
 </header>
 
     <div class="main">
-        @yield('account')
-        @yield('cart')
         <div class="main-sidebar">
             @yield('sidebar')
         </div>
         <div class="main-content">
             @yield('content')
+            @yield('account')
+            @yield('cart')
         </div>
     </div>
 <footer class="footer">

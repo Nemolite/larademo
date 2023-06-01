@@ -41,32 +41,61 @@ class MainController extends Controller
         return view('index', $data );
     }
 
+    // Добавление товара в корзину
     public function cartproduct(Request $request){
-        $id = $request->procuctid;
-        $product = Product::find($id);
-        $id = Auth::id();
+        dd($request);
+        $tmp = $request->all();
+        dd($tmp);
+        $prodid = $request->prodid;
+        //dd($prodid);
+        $product = Product::find($productid);
+        //dd($product);
+        $userid = Auth::id();
         $datasesion = [
-            'userid' =>$id,
-            'id'=>$product->id,
+            'userid'=>$userid,
+            'id'=>$prodid,
             'price' =>$product->price,
             'description' =>$product->description,
             'image' =>$product->image,
             'country' =>$product->country,
         ];
-        session($datasesion);
+        //session([$userid =>$datasesion]);
+        session()->push($datasesion);
         return redirect('/');
     }
 
     public function cart(){
-        $id = session('id');
+        //session()->flush();
+        dd(session()->all());
+        $products = session()->all();
+        //dd($products[0]);
+        //dd(session()->get('userid'));
+        $userid = Auth::id();
+        if (session()->get('userid')==$userid){
+
+        }
         $userid = session('userid');
-        return view('cart',['id'=>$id,'userid'=>$userid]);
+
+
+        $productid = session('id');
+        $data = [
+            'id'=>$productid,
+            'userid'=>$userid,
+            'sessionid'=>session()->getId()
+        ];
+        return view('cart',$data);
     }
 
 
     public function account(){
 
-        return view('account');
+        $user = Auth::user();
+        $data = [
+            'name'=>$user->name,
+            'email'=>$user->email
+        ];
+
+        return view('account',$data);
     }
 
 }
