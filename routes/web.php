@@ -47,12 +47,17 @@ Route::middleware('auth')->group(function() {
         Route::get('/product',[\App\Http\Controllers\HomeController::class, 'product'])->name('product');
         Route::post('/addproduct',[\App\Http\Controllers\HomeController::class, 'addproduct'])->name('addproduct');
 
-
     // users
 
         // Панель управления аккаунтом, заказми, корзиной (для пользователя)
         Route::get('/cart',[\App\Http\Controllers\MainController::class, 'cart'])->name('cart');
         Route::get('/account',[\App\Http\Controllers\MainController::class, 'account'])->name('account');
+
+        // Оформление заказ
+        Route::post('/orders',[\App\Http\Controllers\MainController::class, 'orders'])->name('orders');
+
+        // Подтверждение заказ
+        Route::post('/checkout',[\App\Http\Controllers\MainController::class, 'checkout'])->name('checkout');
 
 });
 

@@ -17,7 +17,7 @@
             <tbody>
                 @foreach ($products as $prod)
                     <tr>
-                        <th scope="row"></th>
+                        <th scope="row">{{ $loop->index }}</th>
                         <td><p>{{ $prod['name'] }}</p></td>
                         <td><p>{{ $prod['price'] }}</p></td>
                         <td><p>{{ $prod['country'] }}</p></td>
@@ -33,6 +33,12 @@
                 @endforeach
             </tbody>
         </table>
+        <h4>Итого (стоимость вашего заказ): {{ $total }}</h4>
+        <form method="post" action="{{ route('orders') }}">
+            @csrf
+            <input type="hidden"  name="sessionid" value="{{ $sessionid }}">
+            <button type="submit" class="btn btn-primary">Оформить заказ</button>
+        </form>
     @endisset
     @empty($products)
         <h3>Ваша корзина пуста</h3>

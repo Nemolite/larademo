@@ -58,6 +58,8 @@
             @yield('content')
             @yield('account')
             @yield('cart')
+            @yield('orders')
+            @yield('checkout')
         </div>
     </div>
 <footer class="footer">

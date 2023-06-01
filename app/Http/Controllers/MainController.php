@@ -59,16 +59,29 @@ class MainController extends Controller
         return redirect('/');
     }
 
+    // Вывод выбранных товаров
     public function cart(){
         $userid = Auth::id();
-        //dd(session()->get($userid));
+
+        // Вычисление общей стоимости заказ
+        $products = session()->get($userid);
+        if (isset($products)) {
+            $total = 0;
+            foreach ($products as $prod){
+                $total+=(int)$prod['price'];
+            }
+        } else {
+            $total = 0;
+        }
+
         $productid = session('id');
         $data = [
             'user' => Auth::user()->name,
             'id'=>$productid,
             'userid'=>$userid,
             'sessionid'=>session()->getId(),
-            'products' => session()->get($userid)
+            'products' => session()->get($userid),
+            'total'=>$total
         ];
         return view('cart',$data);
     }
@@ -83,6 +96,42 @@ class MainController extends Controller
         ];
 
         return view('account',$data);
+    }
+
+    // Оформление заказ
+    public function orders(Request $request){
+        $userid = Auth::id();
+        $user = Auth::user();
+        // Вычисление общей стоимости заказ
+        $products = session()->get($userid);
+        if (isset($products)) {
+            $total = 0;
+            foreach ($products as $prod){
+                $total+=(int)$prod['price'];
+            }
+        } else {
+            $total = 0;
+        }
+
+        $productid = session('id');
+        $data = [
+            'user' => Auth::user()->name,
+            'id'=>$productid,
+            'userid'=>$userid,
+            'sessionid'=>session()->getId(),
+            'products' => session()->get($userid),
+            'total'=>$total,
+            // Данные пользователя
+            'name'=>$user->name,
+            'email'=>$user->email
+        ];
+
+        return view('orders',$data);
+    }
+
+    // Подтверждение заказа
+    public function checkout(){
+        return view('checkout');
     }
 
 }
