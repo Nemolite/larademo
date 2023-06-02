@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -130,7 +131,24 @@ class MainController extends Controller
     }
 
     // Подтверждение заказа
-    public function checkout(){
+    public function checkout(Request $request){
+
+        $order = Order::create(
+            $request->all() + ['user_id' => Auth::id()]
+        );
+        //dd($order->id);
+        $userid = Auth::id();
+        $products = session()->get($userid);
+
+        if (isset($products)) {
+            $arridproduct = [];
+            foreach ($products as $prod){
+                $arridproduct[] = (int)$prod['id'];
+            }
+        }
+        //dd($arridproduct);
+        $productsid = Product::find($arridproduct);
+        $order->products()->attach($productsid);
         return view('checkout');
     }
 

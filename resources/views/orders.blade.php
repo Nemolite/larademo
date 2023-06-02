@@ -40,11 +40,27 @@
 
     @endisset
     <h3>Способ оплаты:</h3>
-      Оплата после доставки
-    <h3>Адрес доставки:</h3>
-    Чувашия, г.Шумерля, ул.Некрасова, д.62
+    Оплата после доставки
     <form method="post" action="{{ route('checkout') }}">
         @csrf
+        <h3>Данные для доставки:</h3>
+        <div class="form-group">
+        <input type="text" class="form-control" name="name" placeholder="Имя, Фамилия"
+               required maxlength="255" value="{{ old('name', $name) }}">
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" name="email" placeholder="Адрес почты"
+                   required maxlength="255" value="{{ old('email', $email) }}">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="phone" placeholder="Номер телефона"
+                   required maxlength="255" value="{{ old('phone') ?? '' }}">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="address" placeholder="Адрес доставки"
+                   required maxlength="255" value="{{ old('address') ?? '' }}">
+        </div>
+
         <input type="hidden"  name="sessionid" value="{{ $sessionid }}">
         <button type="submit" class="btn btn-primary">Подтвердить заказ</button>
     </form>
