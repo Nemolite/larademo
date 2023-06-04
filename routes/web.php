@@ -47,6 +47,10 @@ Route::middleware('auth')->group(function() {
         //Работа с товаром
         Route::get('/product',[\App\Http\Controllers\HomeController::class, 'product'])->name('product');
         Route::post('/addproduct',[\App\Http\Controllers\HomeController::class, 'addproduct'])->name('addproduct');
+        Route::get('/updateproduct/{id}',[\App\Http\Controllers\HomeController::class, 'updateproduct'])->name('updateproduct');
+        Route::post('/updateprod',[\App\Http\Controllers\HomeController::class, 'updateprod'])->name('updateprod');
+        Route::post('/deleteproduct',[\App\Http\Controllers\HomeController::class, 'deleteproduct'])->name('deleteproduct');
+
 
     // users
 

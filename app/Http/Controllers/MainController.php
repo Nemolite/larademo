@@ -136,7 +136,7 @@ class MainController extends Controller
         $order = Order::create(
             $request->all() + ['user_id' => Auth::id()]
         );
-        //dd($order->id);
+
         $userid = Auth::id();
         $products = session()->get($userid);
 
@@ -146,7 +146,7 @@ class MainController extends Controller
                 $arridproduct[] = (int)$prod['id'];
             }
         }
-        //dd($arridproduct);
+
         $productsid = Product::find($arridproduct);
         $order->products()->attach($productsid);
         return view('checkout');

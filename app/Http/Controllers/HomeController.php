@@ -46,6 +46,7 @@ class HomeController extends Controller
         return view('home',$data);
     }
 
+    // Добавление категории
     public function addcategory(Request $request){
 
         if ($request->method()=='POST'){
@@ -70,6 +71,7 @@ class HomeController extends Controller
         return view('home',$data);
     }
 
+    // Удаление категории
     public function deletecategory(Request $request){
         $id = $request->delid;
         $check = Category::find($id)->delete();
@@ -79,7 +81,7 @@ class HomeController extends Controller
             return response('Что-то пошло не так');
         }
     }
-
+    // Изменения категории
     public function updatecategory($id){
         $category = Category::find($id);
         $data = [
@@ -99,13 +101,15 @@ class HomeController extends Controller
      * Работа с товаром
      */
     public function product(){
+        $product = Product::paginate(5);
         $category = Category::all();
         $data = [
-            'catprod'=>$category
+            'catprod'=>$category,
+            'product'=>$product
         ];
         return view('home',$data);
     }
-
+    // Добавление товаров
     public function addproduct(Request $request){
         $productform = $request->all();
         $filename    = $productform['image']->getClientOriginalName();
@@ -128,5 +132,40 @@ class HomeController extends Controller
         $check = $product->save();
         $msg = $check ?'Товар сохранен':'Что-то пошло не так';
         return redirect('product')->with('status', $msg);;
+    }
+
+    // Изменение товара
+    public function updateproduct($id){
+        $caterory = Category::all();
+        $product = Product::find($id);
+        $catprod = $product->categories; // вернет все категории для продукта $id
+        $data = [
+            'product'=>$product,
+            'catprod'=>$catprod,
+            'caterory'=>$caterory
+        ];
+        return view('product',$data);
+    }
+
+    public function updateprod(Request $request){
+
+        $product = Product::find($request->upprodid);
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->country = $request->country;
+
+        $productform = $request->all();
+        if($productform['image']) {
+            $filename    = $productform['image']->getClientOriginalName();
+            $productform['image']->move(Storage::path('/public/images/'),$filename);
+            $product->image = $filename;
+        }
+        $product->save();
+
+    }
+    // Удаление товар
+    public function deleteproduct(Request $request){
+
     }
 }

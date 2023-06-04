@@ -35,8 +35,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto menu-fix">
-                            <li><a href="{{ route('category') }}">Категории товаров</a></li>
+                        @auth
+                            <li><a href="{{ route('category') }}">Категории</a></li>
                             <li><a href="{{ route('product') }}">Товары</a></li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -81,6 +83,7 @@
         <main class="py-4">
             @yield('content')
             @yield('updatecategory')
+            @yield('updateproduct')
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

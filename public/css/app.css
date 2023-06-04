@@ -2,6 +2,18 @@
     width: 20px;
 }
 
+.category-main {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px dotted #6c757d;
+    margin-bottom: 20px;
+}
+
+.category-content,
+.category-forms{
+    width: 45%;
+}
+
 .category-forms {
     display: flex;
     flex-direction: row;
@@ -10,4 +22,32 @@
 
 .menu-fix li {
     margin-left: 10px;
+}
+
+.updatecategory-main {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.updateproduct-main {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.addproduct svg {
+    width: 20px;
+}
+
+.prod-cat {
+    color:red;
+}
+
+.main-content-img-admin-mini {
+    width: 300px;
+    height: 300px;
+}
+
+.main-content-img-admin-mini img{
+    width: 100%;
+    height: 100%;
 }

@@ -1,6 +1,7 @@
 @extends('basa')
 @section('sidebar')
     @isset($category)
+        <h1>Категории товаров</h1>
         <h2><a href="{{ route('index') }}">Все категории</a></h2>
         @foreach ($category as $cat)
             <h2><a href="{{ route('cat',$cat->id) }}">{{ $cat->name }}</a></h2>
@@ -10,12 +11,9 @@
 @endsection
 @section('content')
     @isset($product)
-
+        <h1>Каталог товаров</h1>
         <div class="container">
-
-
                 <div class="row">
-
                     @foreach ($product as $prod)
                         <div class="col-4">
                             <h2>{{ $prod->name }}</h2>
