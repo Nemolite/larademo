@@ -72,29 +72,53 @@
 </div><!-- class="container addcat" -->
 <div class="container addproduct">
     <div class="row">
-        <div class="col-6">
+        <div class="col-8">
             @isset($product)
+                <h1>Список товаров</h1>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">№пп</th>
+                        <th scope="col">Наименование</th>
+                        <th scope="col">Стоимость</th>
+                        <th scope="col">Страна</th>
+                        <th scope="col">Описание товара</th>
+                        <th scope="col">Миниатюра</th>
+                        <th scope="col">Изменить</th>
+                        <th scope="col">Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                 @foreach ($product as $prod)
-                    <div class="product-main">
-                        <div class="product-content">
-                            <h3>{{ $prod->name }}</h3>
-                            <p>{{ __('Страна:') }} {{ $prod->country }}</p>
-                            <p>{{ __('Цена:') }} {{ $prod->price }}</p>
-                        </div> <!-- class="product-content" -->
-                        <div class="product-forms">
-                            <a href="{{ route('updateproduct',$prod->id) }}"><button type="submit" class="btn btn-warning">Изменить</button></a>
+                    <tr>
+                    <th scope="row">{{ $loop->index+1 }}</th>
+                    <td><p>{{ $prod->name }}</p></td>
+                    <td><p>{{ $prod->nameprice }}</p></td>
+                    <td><p>{{ $prod->country }}</p></td>
+                    <td><p>{{ $prod->description }}</p></td>
+                    <td>
+                        @isset($prod->image)
+                            <div class="mini-img-list">
+                                <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
+                            </div>
+                        @endisset
+                    </td>
+                        <td><a href="{{ route('updateproduct',$prod->id) }}"><button type="submit" class="btn btn-warning">Изменить</button></a></td>
+                        <td>
                             <form method="post" action="{{ route('deleteproduct') }}">
                                 @csrf
                                 <input type="hidden" name="delid" value="{{ $prod->id }}">
                                 <button type="submit" class="btn btn-danger deletecategory">Удалить</button>
                             </form>
-                        </div> <!-- class="product-forms" -->
-                    </div><!-- class="product-main" -->
+                        </td>
+                    </tr>
                 @endforeach
+                    </tbody>
+                </table>
                     {{ $product->links() }}
             @endisset
-        </div> <!-- class="col-6" -->
-        <div class="col-6">
+        </div> <!-- class="col-8" -->
+        <div class="col-4">
             @isset($catprod)
                 <h1>Добавить товар</h1>
                 <form method="post" action="{{ route('addproduct') }}" id="addproduct" name="addproduct" enctype="multipart/form-data">
@@ -135,7 +159,7 @@
                     </div>
                 @endif
             @endisset
-        </div><!-- class="col-6" -->
+        </div><!-- class="col-4" -->
     </div><!-- class="row" -->
 </div> <!-- class="container addproduct" -->
 @endsection
