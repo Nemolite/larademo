@@ -89,9 +89,10 @@
                     </tr>
                     </thead>
                     <tbody>
+
                 @foreach ($product as $prod)
                     <tr>
-                    <th scope="row">{{ $loop->index+1 }}</th>
+                    <th scope="row">{{ $product->firstItem() + $loop->index }}</th>
                     <td><p>{{ $prod->name }}</p></td>
                     <td><p>{{ $prod->nameprice }}</p></td>
                     <td><p>{{ $prod->country }}</p></td>
