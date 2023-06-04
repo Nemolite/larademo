@@ -109,7 +109,7 @@
                             <form method="post" action="{{ route('deleteproduct') }}">
                                 @csrf
                                 <input type="hidden" name="delid" value="{{ $prod->id }}">
-                                <button type="submit" class="btn btn-danger deletecategory">Удалить</button>
+                                <button type="submit" class="btn btn-danger deleteproduct">Удалить</button>
                             </form>
                         </td>
                     </tr>
