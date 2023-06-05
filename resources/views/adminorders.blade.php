@@ -13,6 +13,7 @@
                     <th scope="col">Адрес доставки</th>
                     <th scope="col">Стоимость заказа</th>
                     <th scope="col">Заказанный товар</th>
+                    <th scope="col">Статус заказа</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,14 +33,13 @@
                                 @foreach ($products as $product)
                                     @foreach ($product as $prod)
                                         <p>{{ $prod->name }}</p>
-                                        <p>{{ $prod->description }}</p>
-                                        <p>{{ $prod->country }}</p>
                                         <hr>
                                     @endforeach
 
                                 @endforeach
                             @endisset
                         </td>
+                        <td><p class="order-status">Заказ выполнен</p></td>
                     </tr>
                 @endforeach
 
