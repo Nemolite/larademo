@@ -51,6 +51,8 @@ Route::middleware('auth')->group(function() {
         Route::post('/updateprod',[\App\Http\Controllers\HomeController::class, 'updateprod'])->name('updateprod');
         Route::post('/deleteproduct',[\App\Http\Controllers\HomeController::class, 'deleteproduct'])->name('deleteproduct');
 
+        // Работа с заказами
+        Route::get('/adminorders',[\App\Http\Controllers\OrderController::class, 'adminorders'])->name('adminorders');
 
     // users
 

@@ -132,12 +132,17 @@ class MainController extends Controller
 
     // Подтверждение заказа
     public function checkout(Request $request){
-
+        $userid = Auth::id();
         $order = Order::create(
-            $request->all() + ['user_id' => Auth::id()]
+             [
+                 'user_id' =>$userid,
+                 'name'=>$request->name,
+                 'email'=>$request->email,
+                 'phone'=>$request->phone,
+                 'address'=>$request->address,
+             ]
         );
 
-        $userid = Auth::id();
         $products = session()->get($userid);
 
         if (isset($products)) {

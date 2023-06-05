@@ -38,6 +38,7 @@
                         @auth
                             <li><a href="{{ route('category') }}">Категории</a></li>
                             <li><a href="{{ route('product') }}">Товары</a></li>
+                            <li><a href="{{ route('adminorders') }}">Заказы</a></li>
                         @endauth
                     </ul>
 
@@ -84,6 +85,7 @@
             @yield('content')
             @yield('updatecategory')
             @yield('updateproduct')
+            @yield('adminorders')
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

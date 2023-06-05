@@ -20,7 +20,7 @@
             <tbody>
             @foreach ($products as $prod)
                 <tr>
-                    <th scope="row">{{ $products->firstItem() + $loop->index }}</th>
+                    <th scope="row">{{ $loop->index+1 }}</th>
                     <td><p>{{ $prod['name'] }}</p></td>
                     <td><p>{{ $prod['price'] }}</p></td>
                     <td><p>{{ $prod['country'] }}</p></td>

@@ -132,7 +132,7 @@ class HomeController extends Controller
 
         $check = $product->save();
         $msg = $check ?'Товар сохранен':'Что-то пошло не так';
-        return redirect('product')->with('status', $msg);;
+        return redirect('product')->with('status', $msg);
     }
 
     // Изменение товара
@@ -178,4 +178,5 @@ class HomeController extends Controller
             return redirect('/product')->with('status', 'Что-то пошло не так!');
         }
     }
+
 }
