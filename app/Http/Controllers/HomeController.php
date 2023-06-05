@@ -77,9 +77,9 @@ class HomeController extends Controller
         $id = $request->delid;
         $check = Category::find($id)->delete();
         if ($check) {
-            return response('Категория удалена');
+            return redirect('/category')->with('status', 'Категория удалена!');
         } else {
-            return response('Что-то пошло не так');
+            return redirect('/category')->with('status', 'Что-то пошло не так!');
         }
     }
     // Изменения категории
@@ -173,9 +173,9 @@ class HomeController extends Controller
         DB::table('category_product')->where('product_id', '=', $id)->delete();
         $check = Product::find($id)->delete();
         if ($check) {
-            return response('Товар удален');
+            return redirect('/product')->with('status', 'Товар удален!');
         } else {
-            return response('Что-то пошло не так');
+            return redirect('/product')->with('status', 'Что-то пошло не так!');
         }
     }
 }
