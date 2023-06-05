@@ -129,6 +129,15 @@ class MainController extends Controller
 
         return view('orders',$data);
     }
+    // Удаление товара из закза
+
+    public function cartproductdel(Request $request){
+
+        $prodid = $request->prodid;
+        session()->forget(['id' , $prodid]);
+        return redirect('/cart');
+
+    }
 
     // Подтверждение заказа
     public function checkout(Request $request){

@@ -12,6 +12,7 @@
                 <th scope="col">Страна</th>
                 <th scope="col">Описание товара</th>
                 <th scope="col">Миниатюра</th>
+                <th scope="col">Действие</th>
             </tr>
             </thead>
             <tbody>
@@ -28,6 +29,15 @@
                                     <img src="{{ Storage::url('images/'.$prod['image']) }}" alt="{{ $prod['name'] }}">
                                 </div>
                             @endisset
+                        </td>
+                        <td>
+                            <p>
+                            <form method="post" action="{{ route('cartproductdel') }}">
+                                @csrf
+                                <input type="hidden"  name="prodid" value="{{ $prod['id'] }}">
+                                <button type="submit" class="btn btn-danger">Удалить из корзины</button>
+                            </form>
+                            </p>
                         </td>
                     </tr>
                 @endforeach
