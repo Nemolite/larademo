@@ -166,6 +166,15 @@ class MainController extends Controller
         return view('checkout');
     }
 
+    public function onas(){
+        $products = DB::table('products')->limit(3)->get();
+
+        $data = [
+            'products'=>$products
+        ];
+        return view('onas',$data);
+    }
+
     public function contacts(){
         return view('contacts');
     }

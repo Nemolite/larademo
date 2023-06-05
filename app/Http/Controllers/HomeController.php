@@ -162,7 +162,12 @@ class HomeController extends Controller
             $productform['image']->move(Storage::path('/public/images/'),$filename);
             $product->image = $filename;
         }
-        $product->save();
+        $check = $product->save();
+        if ($check) {
+            return redirect('/product')->with('status', 'Товар Изменен!');
+        } else {
+            return redirect('/product')->with('status', 'Что-то пошло не так!');
+        }
 
     }
     // Удаление товар

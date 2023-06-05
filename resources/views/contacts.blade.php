@@ -1,4 +1,4 @@
 @extends('basa')
 @section('contacts')
-    <h1>Наши контакты</h1>
+    <h1>Где нас найти?</h1>
 @endsection
