@@ -44,6 +44,11 @@ class MainController extends Controller
 
     // Добавление товара в корзину
     public function cartproduct(Request $request){
+        if (auth()->guest()){
+            return redirect('/home');
+        }
+
+
         $prodid = $request->prodid;
         $product = Product::find($prodid);
         $userid = Auth::id();
@@ -58,6 +63,14 @@ class MainController extends Controller
 
         session()->push($userid,$datasesion);
         return redirect('/');
+    }
+
+    public function showproduct(Request $request){
+        $product = Product::find($request->showprodid);
+        $data = [
+            'product' => $product
+        ];
+        return view('showproduct', $data );
     }
 
     // Вывод выбранных товаров

@@ -17,14 +17,20 @@
                     @foreach ($product as $prod)
                         <div class="col-4">
                             <h2>{{ $prod->name }}</h2>
-                            <p>{{ $prod->price }}</p>
-                            <p>{{ $prod->country }}</p>
-                            <p>{{ $prod->description }}</p>
+                            <p>Цена:{{ $prod->price }}</p>
                             @isset($prod->image)
                                 <div class="main-content-img">
                                     <img src="{{ Storage::url('images/'.$prod->image) }}" alt="{{ $prod->name }}">
                                 </div>
                             @endisset
+                            <div class="btn-show-product">
+                                <form method="post" action="{{ route('showproduct') }}">
+                                    @csrf
+                                    <input type="hidden"  name="showprodid" value="{{ $prod->id }}">
+                                    <button type="submit" class="btn btn-success">Подробно</button>
+                                </form>
+                            </div>
+
                             <form method="post" action="{{ route('cartproduct') }}">
                                 @csrf
                                 <input type="hidden"  name="prodid" value="{{ $prod->id }}">

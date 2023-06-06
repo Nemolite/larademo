@@ -68,6 +68,7 @@
             @yield('checkout')
             @yield('contacts')
             @yield('onas')
+            @yield('showproduct')
         </div>
     </div>
 <footer class="footer">

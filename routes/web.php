@@ -26,6 +26,7 @@ Route::get('/contacts',[\App\Http\Controllers\MainController::class, 'contacts']
 Route::get('/onas',[\App\Http\Controllers\MainController::class, 'onas'])->name('onas');
 Route::get('/cat/{id}',[\App\Http\Controllers\MainController::class, 'cat'])->name('cat');
 Route::post('/cartproduct',[\App\Http\Controllers\MainController::class, 'cartproduct'])->name('cartproduct');
+Route::post('/showproduct',[\App\Http\Controllers\MainController::class, 'showproduct'])->name('showproduct');
 Route::post('/contacts',[\App\Http\Controllers\MainController::class, 'contacts'])->name('contacts');
 
 
