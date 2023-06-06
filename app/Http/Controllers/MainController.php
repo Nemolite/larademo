@@ -100,13 +100,24 @@ class MainController extends Controller
         return view('cart',$data);
     }
 
-
     public function account(){
-
         $user = Auth::user();
+        //$userorder = DB::table('orders')->where('user_id',$user->id)->get();
+        $userorder = Order::where('user_id',$user->id)->get();
+
+        $products =[];
+        $total = 0;
+        foreach ($userorder as $order){
+            $products[] = $order->products;
+            $total = $order->products->sum('price');
+        }
         $data = [
             'name'=>$user->name,
-            'email'=>$user->email
+            'email'=>$user->email,
+            'userorder'=>$userorder,
+            'total'=>$total,
+            'products'=>$products,
+
         ];
 
         return view('account',$data);
@@ -180,7 +191,7 @@ class MainController extends Controller
     }
 
     public function onas(){
-        $products = DB::table('products')->limit(3)->get();
+        $products = DB::table('products')->limit(5)->get();
 
         $data = [
             'products'=>$products

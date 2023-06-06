@@ -19,13 +19,13 @@
                 <tbody>
                 @foreach ($orders as $order)
                     <tr>
-                        <th scope="row">{{ $loop->index+1 }}</th>
+                        <th scope="row">{{ $loop->iteration }}</th>
                         <td><p>{{ $order->id }}</p></td>
                         <td><p>{{ $order->name }}</p></td>
                         <td><p>{{ $order->phone }}</p></td>
                         <td><p>{{ $order->address }}</p></td>
                         <td><p>
-{{ $total }}
+                            {{ $total }}
                             </p>
                         </td>
                         <td>

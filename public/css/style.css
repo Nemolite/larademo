@@ -180,3 +180,17 @@ nav {
 .contacts-map {
     width: 100%;
 }
+
+.slider-logo {
+    width: 100%;
+    height: 80px;
+}
+
+.slider-logo img {
+    width: 100%;
+    height: 100%;
+}
+
+.order-status {
+    color:#1e7e34;
+}
