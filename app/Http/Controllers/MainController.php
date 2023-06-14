@@ -66,8 +66,6 @@ class MainController extends Controller
 
     // Вывод выбранных товаров
     public function cart(){
-        //dd(session()->all());
-        //session()->flush();
         $userid = Auth::id();
         // Получаем массив id товаров
         $ids = session()->get($userid);
@@ -80,7 +78,6 @@ class MainController extends Controller
         } else {
             $product_ids = [];
         }
-
 
         // Получаем список товаров по массиву id
         if(!empty($product_ids)){
@@ -122,11 +119,10 @@ class MainController extends Controller
         $total = [];
 
         foreach ($userorder as $order){
-//dd($order->products->all());
             $products[$order->id] = $order->products;
             $total[$order->id] = $order->products->sum('price');
         }
-        //dd($products);
+
         $data = [
             'name'=>$user->name,
             'email'=>$user->email,
@@ -207,10 +203,7 @@ class MainController extends Controller
             }
             session()->push($userid,$prod);
         }
-
-        //session()->push($userid,$products);
         return redirect('/cart');
-
     }
 
     // Подтверждение заказа
@@ -237,7 +230,6 @@ class MainController extends Controller
         } else {
             $product_ids = [];
         }
-
 
         // Получаем список товаров по массиву id
         if(!empty($product_ids)){
@@ -272,7 +264,8 @@ class MainController extends Controller
            'productsid'=> $productsid,
             'total'=>$total
         ];
-
+        // Удаляем товары из сессии (из корзины)
+        session()->forget($userid);
         return view('checkout',$data);
     }
 
