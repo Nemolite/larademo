@@ -75,6 +75,7 @@ class HomeController extends Controller
     // Удаление категории
     public function deletecategory(Request $request){
         $id = $request->delid;
+        DB::table('category_product')->where('category_id', '=', $id)->delete();
         $check = Category::find($id)->delete();
         if ($check) {
             return redirect('/category')->with('status', 'Категория удалена!');

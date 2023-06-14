@@ -7,7 +7,7 @@ deletecategory.forEach(item => {
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("result_output").innerHTML = this.responseText;
+                document.getElementById("result_output").innerHTML = "Категория удалена";
             }
             else {
                 document.getElementById("result_output").innerHTML = "Эту категорию нельзя удалить. Имеются товары";
