@@ -142,16 +142,39 @@ class MainController extends Controller
     public function orders(Request $request){
         $userid = Auth::id();
         $user = Auth::user();
-        // Вычисление общей стоимости заказ
-        $products = session()->get($userid);
-        if (isset($products)) {
+        // Получаем массив id товаров
+        $ids = session()->get($userid);
+
+        // На всякий случай удалаем пусты значения
+        if(!empty($ids)){
+            $product_ids = array_filter($ids, function($element) {
+                return !empty($element);
+            });
+        } else {
+            $product_ids = [];
+        }
+
+
+        // Получаем список товаров по массиву id
+        if(!empty($product_ids)){
+            $products = Product::query()
+                ->whereIn('id', $product_ids)
+                ->get();
+        } else {
+            $products = [];
+        }
+
+        if (isset($products)&&(!empty($products))) {
             $total = 0;
             foreach ($products as $prod){
-                $total+=(int)$prod['price'];
+                if(isset($prod['price'])){
+                    $total+=(int)$prod['price'];
+                }
             }
         } else {
             $total = 0;
         }
+
 
         $productid = session('id');
         $data = [
@@ -159,7 +182,7 @@ class MainController extends Controller
             'id'=>$productid,
             'userid'=>$userid,
             'sessionid'=>session()->getId(),
-            'products' => session()->get($userid),
+            'products' => !empty($products)?$products:null,
             'total'=>$total,
             // Данные пользователя
             'name'=>$user->name,
