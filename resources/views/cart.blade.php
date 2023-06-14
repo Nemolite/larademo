@@ -16,6 +16,7 @@
             </tr>
             </thead>
             <tbody>
+            @isset($products)
                 @foreach ($products as $prod)
                     <tr>
                         <th scope="row">{{  $loop->iteration }}</th>
@@ -41,6 +42,7 @@
                         </td>
                     </tr>
                 @endforeach
+            @endisset
             </tbody>
         </table>
         <h4>Итого (стоимость вашего заказ): {{ $total }}</h4>

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -48,20 +49,10 @@ class MainController extends Controller
             return redirect('/home');
         }
 
-
         $prodid = $request->prodid;
-        $product = Product::find($prodid);
         $userid = Auth::id();
-        $datasesion = [
-            'id'=>$prodid,
-            'name'=>$product->name,
-            'price' =>$product->price,
-            'description' =>$product->description,
-            'image' =>$product->image,
-            'country' =>$product->country,
-        ];
-
-        session()->push($userid,$datasesion);
+       // Записываем в сессию только id товара
+        session()->push($userid,$prodid);
         return redirect('/');
     }
 
@@ -75,14 +66,37 @@ class MainController extends Controller
 
     // Вывод выбранных товаров
     public function cart(){
+        //dd(session()->all());
+        //session()->flush();
         $userid = Auth::id();
+        // Получаем массив id товаров
+        $ids = session()->get($userid);
 
-        // Вычисление общей стоимости заказ
-        $products = session()->get($userid);
-        if (isset($products)) {
+        // На всякий случай удалаем пусты значения
+        if(!empty($ids)){
+            $product_ids = array_filter($ids, function($element) {
+                return !empty($element);
+            });
+        } else {
+            $product_ids = [];
+        }
+
+
+        // Получаем список товаров по массиву id
+        if(!empty($product_ids)){
+            $products = Product::query()
+                ->whereIn('id', $product_ids)
+                ->get();
+        } else {
+            $products = [];
+        }
+
+        if (isset($products)&&(!empty($products))) {
             $total = 0;
             foreach ($products as $prod){
-                $total+=(int)$prod['price'];
+                if(isset($prod['price'])){
+                    $total+=(int)$prod['price'];
+                }
             }
         } else {
             $total = 0;
@@ -94,9 +108,10 @@ class MainController extends Controller
             'id'=>$productid,
             'userid'=>$userid,
             'sessionid'=>session()->getId(),
-            'products' => session()->get($userid),
+            'products' => !empty($products)?$products:null,
             'total'=>$total
         ];
+
         return view('cart',$data);
     }
 
@@ -157,8 +172,19 @@ class MainController extends Controller
 
     public function cartproductdel(Request $request){
 
+        $userid = Auth::id();
         $prodid = $request->prodid;
-        session()->forget(['id' , $prodid]);
+        $products = $request->session()->pull($userid);
+
+        foreach ($products as $prod){
+            if($prod==$prodid){
+               // Arr::forget($products, $key);
+                continue;
+            }
+            session()->push($userid,$prod);
+        }
+
+        //session()->push($userid,$products);
         return redirect('/cart');
 
     }
