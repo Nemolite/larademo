@@ -117,15 +117,16 @@ class MainController extends Controller
 
     public function account(){
         $user = Auth::user();
-        //$userorder = DB::table('orders')->where('user_id',$user->id)->get();
-        $userorder = Order::where('user_id',$user->id)->get();
-
+        $userorder = Order::where('user_id',$user->id)->get(); // collection
         $products =[];
-        $total = 0;
+        $total = [];
+
         foreach ($userorder as $order){
-            $products[] = $order->products;
-            $total = $order->products->sum('price');
+//dd($order->products->all());
+            $products[$order->id] = $order->products;
+            $total[$order->id] = $order->products->sum('price');
         }
+        //dd($products);
         $data = [
             'name'=>$user->name,
             'email'=>$user->email,
@@ -225,18 +226,54 @@ class MainController extends Controller
              ]
         );
 
-        $products = session()->get($userid);
+        // Получаем массив id товаров
+        $ids = session()->get($userid);
 
-        if (isset($products)) {
+        // На всякий случай удалаем пусты значения
+        if(!empty($ids)){
+            $product_ids = array_filter($ids, function($element) {
+                return !empty($element);
+            });
+        } else {
+            $product_ids = [];
+        }
+
+
+        // Получаем список товаров по массиву id
+        if(!empty($product_ids)){
+            $products = Product::query()
+                ->whereIn('id', $product_ids)
+                ->get();
+        } else {
+            $products = [];
+        }
+
+        if (isset($products)&&(!empty($products))) {
             $arridproduct = [];
             foreach ($products as $prod){
                 $arridproduct[] = (int)$prod['id'];
             }
         }
 
+        if (isset($products)&&(!empty($products))) {
+            $total = 0;
+            foreach ($products as $prod){
+                if(isset($prod['price'])){
+                    $total+=(int)$prod['price'];
+                }
+            }
+        } else {
+            $total = 0;
+        }
+
         $productsid = Product::find($arridproduct);
         $order->products()->attach($productsid);
-        return view('checkout');
+        $data = [
+           'productsid'=> $productsid,
+            'total'=>$total
+        ];
+
+        return view('checkout',$data);
     }
 
     public function onas(){

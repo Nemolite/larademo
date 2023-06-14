@@ -24,18 +24,15 @@
                     <td><p>{{ $order->id }}</p></td>
                     <td>
                         <p>
-                            {{ $total }}
+                            {{ $total[$order->id] }}
                         </p>
                     </td>
                     <td>
                         @isset( $products)
-                            @foreach ($products as $product)
-                                @foreach ($product as $prod)
-                                    <p>{{ $prod->name }}</p>
-                                    <hr>
-                                @endforeach
-
+                            @foreach ($products[$order->id] as $product)
+                                    <p>{{ $product->name }}</p>
                             @endforeach
+                                <hr>
                         @endisset
                     </td>
                     <td><p class="order-status">Заказ выполнен</p></td>
