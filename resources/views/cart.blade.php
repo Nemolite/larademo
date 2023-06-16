@@ -10,13 +10,14 @@
                 <th scope="col">Наименование</th>
                 <th scope="col">Стоимость</th>
                 <th scope="col">Страна</th>
-                <th scope="col">Описание товара</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Кол-во</th>
                 <th scope="col">Миниатюра</th>
                 <th scope="col">Действие</th>
             </tr>
             </thead>
             <tbody>
-            @isset($products)
+
                 @foreach ($products as $prod)
                     <tr>
                         <th scope="row">{{  $loop->iteration }}</th>
@@ -24,6 +25,7 @@
                         <td><p>{{ $prod['price'] }}</p></td>
                         <td><p>{{ $prod['country'] }}</p></td>
                         <td><p>{{ $prod['description'] }}</p></td>
+                        <td><p>{{ $prod['quantity'] }}</p></td>
                         <td>
                             @isset($prod['image'])
                                 <div class="mini-img">
@@ -42,7 +44,7 @@
                         </td>
                     </tr>
                 @endforeach
-            @endisset
+
             </tbody>
         </table>
         <h4>Итого (стоимость вашего заказ): {{ $total }}</h4>

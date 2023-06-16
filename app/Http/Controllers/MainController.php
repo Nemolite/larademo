@@ -45,15 +45,16 @@ class MainController extends Controller
 
     // Добавление товара в корзину
     public function cartproduct(Request $request){
-        if (auth()->guest()){
+       // dd($request->all());
+        if (Auth::user()){
+            $prodid = $request->prodid;
+            $userid = Auth::id();
+            // Записываем в сессию только id товара
+            session()->push($userid,$prodid);
+            return redirect('/');
+        } else {
             return redirect('/home');
         }
-
-        $prodid = $request->prodid;
-        $userid = Auth::id();
-       // Записываем в сессию только id товара
-        session()->push($userid,$prodid);
-        return redirect('/');
     }
 
     public function showproduct(Request $request){
@@ -66,23 +67,15 @@ class MainController extends Controller
 
     // Вывод выбранных товаров
     public function cart(){
+        //session()->flush();
         $userid = Auth::id();
         // Получаем массив id товаров
         $ids = session()->get($userid);
 
-        // На всякий случай удалаем пусты значения
-        if(!empty($ids)){
-            $product_ids = array_filter($ids, function($element) {
-                return !empty($element);
-            });
-        } else {
-            $product_ids = [];
-        }
-
         // Получаем список товаров по массиву id
-        if(!empty($product_ids)){
+        if(!empty($ids)){
             $products = Product::query()
-                ->whereIn('id', $product_ids)
+                ->whereIn('id', $ids)
                 ->get();
         } else {
             $products = [];
@@ -222,19 +215,11 @@ class MainController extends Controller
         // Получаем массив id товаров
         $ids = session()->get($userid);
 
-        // На всякий случай удалаем пусты значения
-        if(!empty($ids)){
-            $product_ids = array_filter($ids, function($element) {
-                return !empty($element);
-            });
-        } else {
-            $product_ids = [];
-        }
 
         // Получаем список товаров по массиву id
-        if(!empty($product_ids)){
+        if(!empty($ids)){
             $products = Product::query()
-                ->whereIn('id', $product_ids)
+                ->whereIn('id', $ids)
                 ->get();
         } else {
             $products = [];

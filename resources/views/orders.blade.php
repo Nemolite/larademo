@@ -25,6 +25,7 @@
                     <td><p>{{ $prod['price'] }}</p></td>
                     <td><p>{{ $prod['country'] }}</p></td>
                     <td><p>{{ $prod['description'] }}</p></td>
+                    <td><p>{{ $prod['quantity'] }}</p></td>
                     <td>
                         @isset($prod['image'])
                             <div class="mini-img">
