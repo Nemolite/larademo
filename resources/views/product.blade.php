@@ -36,6 +36,10 @@
                     </textarea>
                 </div>
                 <div class="form-group">
+                    <label for="quantity">Количество товара</label>
+                    <input type="number" class="form-control" id="quantity" min="1" name="quantity" value="{{ $product->quantity }}">
+                </div>
+                <div class="form-group">
                         @isset($product->image)
                             <label for="image">Изображение товара</label>
                                 <div class="main-content-img-admin-mini">

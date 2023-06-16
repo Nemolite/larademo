@@ -123,6 +123,7 @@ class HomeController extends Controller
             'name'  =>  $request->name,
             'price' =>  $request->price,
             'description'=> $request->description,
+            'quantity'=> $request->quantity,
             'image' => $filename,
             'country'=> $request->country
 

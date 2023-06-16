@@ -82,7 +82,8 @@
                         <th scope="col">Наименование</th>
                         <th scope="col">Стоимость</th>
                         <th scope="col">Страна</th>
-                        <th scope="col">Описание товара</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Кол-во</th>
                         <th scope="col">Миниатюра</th>
                         <th scope="col">Изменить</th>
                         <th scope="col">Удалить</th>
@@ -94,9 +95,11 @@
                     <tr>
                     <th scope="row">{{ $product->firstItem() + $loop->index }}</th>
                     <td><p>{{ $prod->name }}</p></td>
-                    <td><p>{{ $prod->nameprice }}</p></td>
+                    <td><p>{{ $prod->price }}</p></td>
                     <td><p>{{ $prod->country }}</p></td>
                     <td><p>{{ $prod->description }}</p></td>
+                    <td><p>{{ $prod->quantity }}</p></td>
+                        quantity
                     <td>
                         @isset($prod->image)
                             <div class="mini-img-list">
@@ -126,19 +129,19 @@
                     @csrf
                     <div class="form-group">
                         <label for="name">Название товара</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Цена товара</label>
-                        <input type="number" class="form-control" id="price" name="price">
+                        <input type="number" class="form-control" id="price" name="price" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Страна производитель товара</label>
-                        <input type="text" class="form-control" id="country" name="country">
+                        <input type="text" class="form-control" id="country" name="country" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Категория товара</label>
-                        <select class="form-select" multiple aria-label="multiple select example" name="category[]">
+                        <select class="form-select" multiple aria-label="multiple select example" name="category[]" required>
                             @foreach ($catprod as $cat)
                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                             @endforeach
@@ -146,7 +149,11 @@
                     </div>
                     <div class="form-group">
                         <label for="body">Описание товара</label>
-                        <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                        <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Количество товара</label>
+                        <input type="number" class="form-control" id="quantity" min="1" name="quantity" required>
                     </div>
                     <div class="form-group">
                         <label for="image">Изображение товара</label>
