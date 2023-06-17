@@ -37,6 +37,7 @@ class HomeController extends Controller
 
     }
 
+    // Вывод списка категории
     public function category(){
         $category_all = Category::paginate(5);
         $data = [
@@ -83,6 +84,7 @@ class HomeController extends Controller
             return redirect('/category')->with('status', 'Что-то пошло не так!');
         }
     }
+
     // Изменения категории
     public function updatecategory($id){
         $category = Category::find($id);
@@ -92,6 +94,7 @@ class HomeController extends Controller
         return view('updatecategory',$data);
     }
 
+    // Обновление категории
     public function updatecat(Request $request){
         $category = Category::find($request->upid);
         $category->name = $request->name;
@@ -111,6 +114,7 @@ class HomeController extends Controller
         ];
         return view('home',$data);
     }
+
     // Добавление товаров
     public function addproduct(Request $request){
         $productform = $request->all();
@@ -150,6 +154,7 @@ class HomeController extends Controller
         return view('product',$data);
     }
 
+    // Обновление товара
     public function updateprod(Request $request){
 
         $product = Product::find($request->upprodid);
@@ -172,6 +177,7 @@ class HomeController extends Controller
         }
 
     }
+
     // Удаление товар
     public function deleteproduct(Request $request){
         $id = $request->delid;

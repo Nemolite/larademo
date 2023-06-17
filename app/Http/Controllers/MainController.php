@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
+    // Отображение главной страницы
     public function index(){
         $category = Category::paginate(5);
         $product = Product::paginate(6);
@@ -22,6 +23,7 @@ class MainController extends Controller
         return view('index', $data );
     }
 
+    // Отображение списка категорий
     public function cat($id){
         $cat = Category::find($id);
         $product_cat = $cat->products; // вернет все продукты для категории $id
@@ -32,7 +34,7 @@ class MainController extends Controller
         $product = Product::query()
             ->whereIn('id', $product_ids)
             ->paginate(6);
-        //$product= DB::table('products')->whereIn('id', $product_ids)->paginate(6);
+
         $category = Category::paginate(5);
 
         $data = [
@@ -45,7 +47,7 @@ class MainController extends Controller
 
     // Добавление товара в корзину
     public function cartproduct(Request $request){
-       // dd($request->all());
+
         if (Auth::user()){
             $prodid = $request->prodid;
             $userid = Auth::id();
@@ -57,6 +59,7 @@ class MainController extends Controller
         }
     }
 
+    // Показать один продукт по клику Подробнее
     public function showproduct(Request $request){
         $product = Product::find($request->showprodid);
         $data = [
@@ -67,7 +70,7 @@ class MainController extends Controller
 
     // Вывод выбранных товаров
     public function cart(){
-        //session()->flush();
+
         $userid = Auth::id();
         // Получаем массив id товаров
         $ids = session()->get($userid);
@@ -81,6 +84,7 @@ class MainController extends Controller
             $products = [];
         }
 
+        // Подсчет общей стоимости заказа
         if (isset($products)&&(!empty($products))) {
             $total = 0;
             foreach ($products as $prod){
@@ -105,6 +109,7 @@ class MainController extends Controller
         return view('cart',$data);
     }
 
+    // Акаунт пользователя
     public function account(){
         $user = Auth::user();
         $userorder = Order::where('user_id',$user->id)->get(); // collection
@@ -144,7 +149,6 @@ class MainController extends Controller
             $product_ids = [];
         }
 
-
         // Получаем список товаров по массиву id
         if(!empty($product_ids)){
             $products = Product::query()
@@ -165,7 +169,6 @@ class MainController extends Controller
             $total = 0;
         }
 
-
         $productid = session('id');
         $data = [
             'user' => Auth::user()->name,
@@ -181,8 +184,8 @@ class MainController extends Controller
 
         return view('orders',$data);
     }
-    // Удаление товара из закза
 
+    // Удаление товара из закза
     public function cartproductdel(Request $request){
 
         $userid = Auth::id();
@@ -214,7 +217,6 @@ class MainController extends Controller
 
         // Получаем массив id товаров
         $ids = session()->get($userid);
-
 
         // Получаем список товаров по массиву id
         if(!empty($ids)){
@@ -254,6 +256,7 @@ class MainController extends Controller
         return view('checkout',$data);
     }
 
+    // Страница О нас
     public function onas(){
         $products = DB::table('products')->limit(5)->get();
 
@@ -263,6 +266,7 @@ class MainController extends Controller
         return view('onas',$data);
     }
 
+    // Страница контакты
     public function contacts(){
         return view('contacts');
     }
