@@ -80,30 +80,19 @@ class MainController extends Controller
             $products = Product::query()
                 ->whereIn('id', $ids)
                 ->get();
-        } else {
-            $products = [];
+
+            // Подсчет общей стоимости заказа
+            $total = Product::query()
+                ->whereIn('id', $ids)
+                ->sum('price');
         }
 
-        // Подсчет общей стоимости заказа
-        if (isset($products)&&(!empty($products))) {
-            $total = 0;
-            foreach ($products as $prod){
-                if(isset($prod['price'])){
-                    $total+=(int)$prod['price'];
-                }
-            }
-        } else {
-            $total = 0;
-        }
-
-        $productid = session('id');
         $data = [
             'user' => Auth::user()->name,
-            'id'=>$productid,
             'userid'=>$userid,
             'sessionid'=>session()->getId(),
             'products' => !empty($products)?$products:null,
-            'total'=>$total
+            'total'=>!empty($total)?$total:null
         ];
 
         return view('cart',$data);
