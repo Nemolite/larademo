@@ -37,7 +37,10 @@ class HomeController extends Controller
 
     }
 
-    // Вывод списка категории
+    /**
+     * Вывод списка категории
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function category(){
         $category_all = Category::paginate(5);
         $data = [
@@ -48,7 +51,11 @@ class HomeController extends Controller
         return view('home',$data);
     }
 
-    // Добавление категории
+    /**
+     * Добавление категории
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function addcategory(Request $request){
 
         if ($request->method()=='POST'){
@@ -73,7 +80,11 @@ class HomeController extends Controller
         return view('home',$data);
     }
 
-    // Удаление категории
+    /**
+     * Удаление категории
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function deletecategory(Request $request){
         $id = $request->delid;
         DB::table('category_product')->where('category_id', '=', $id)->delete();
@@ -85,7 +96,11 @@ class HomeController extends Controller
         }
     }
 
-    // Изменения категории
+    /**
+     * Изменения категории
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function updatecategory($id){
         $category = Category::find($id);
         $data = [
@@ -94,7 +109,11 @@ class HomeController extends Controller
         return view('updatecategory',$data);
     }
 
-    // Обновление категории
+    /**
+     * Обновление категории
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function updatecat(Request $request){
         $category = Category::find($request->upid);
         $category->name = $request->name;
@@ -115,7 +134,11 @@ class HomeController extends Controller
         return view('home',$data);
     }
 
-    // Добавление товаров
+    /**
+     * Добавление товаров
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function addproduct(Request $request){
         $productform = $request->all();
         $filename    = $productform['image']->getClientOriginalName();
@@ -141,7 +164,11 @@ class HomeController extends Controller
         return redirect('product')->with('status', $msg);
     }
 
-    // Изменение товара
+    /**
+     * Изменение товара
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function updateproduct($id){
         $caterory = Category::all();
         $product = Product::find($id);
@@ -154,7 +181,11 @@ class HomeController extends Controller
         return view('product',$data);
     }
 
-    // Обновление товара
+    /**
+     * Обновление товара
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function updateprod(Request $request){
 
         $product = Product::find($request->upprodid);
@@ -178,7 +209,11 @@ class HomeController extends Controller
 
     }
 
-    // Удаление товар
+    /**
+     * Удаление товар
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function deleteproduct(Request $request){
         $id = $request->delid;
 
@@ -191,5 +226,4 @@ class HomeController extends Controller
             return redirect('/product')->with('status', 'Что-то пошло не так!');
         }
     }
-
 }

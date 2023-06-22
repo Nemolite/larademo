@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
     /**
      * Работа с заказами
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function adminorders(){
         $orders = Order::all();

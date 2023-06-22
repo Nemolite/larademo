@@ -156,7 +156,11 @@ class MainController extends Controller
         return view('orders',$data);
     }
 
-    // Удаление товара из закза
+    /**
+     * Удаление товара из закза
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function cartproductdel(Request $request){
 
         $product_id= $request->prodid;
@@ -165,7 +169,11 @@ class MainController extends Controller
         return redirect('/cart');
     }
 
-    // Подтверждение заказа
+    /**
+     * Подтверждение заказа
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function checkout(Request $request){
         $userid = Auth::id();
         $order = Order::create(
@@ -200,7 +208,10 @@ class MainController extends Controller
         return view('checkout',$data);
     }
 
-    // Страница О нас
+    /**
+     * Страница О нас
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function onas(){
         $products = DB::table('products')->limit(5)->get();
 
@@ -210,9 +221,11 @@ class MainController extends Controller
         return view('onas',$data);
     }
 
-    // Страница контакты
+    /**
+     * Страница контакты
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function contacts(){
         return view('contacts');
     }
-
 }
