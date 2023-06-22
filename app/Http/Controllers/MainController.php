@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
-    // Отображение главной страницы
+    /**
+     * Главная страница
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(){
         $category = Category::paginate(5);
         $product = Product::paginate(6);
@@ -24,7 +27,11 @@ class MainController extends Controller
         return view('index', $data );
     }
 
-    // Отображение списка категорий
+    /**
+     * Отображение списка категрий
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function cat($id){
         $cat = Category::find($id);
         $product_cat = $cat->products; // вернет все продукты для категории $id
@@ -46,7 +53,11 @@ class MainController extends Controller
         return view('index', $data );
     }
 
-    // Показать один продукт по клику Подробнее
+    /**
+     * Показать один продукт по клику Подробнее
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function showproduct(Request $request){
         $product = Product::find($request->showprodid);
         $data = [
@@ -55,9 +66,12 @@ class MainController extends Controller
         return view('showproduct', $data );
     }
 
-    // Добавление товара в корзину
+    /**
+     * Добавление товара в корзину
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function cartproduct(Request $request){
-
         if (Auth::user()){
             $product_id = $request->prodid;
             Cart::addproduct($product_id);
@@ -68,9 +82,10 @@ class MainController extends Controller
         }
     }
 
-
-
-    // Вывод выбранных товаров
+    /**
+     * Вывод выбранных товаров
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function cart(){
 
         $userid = Auth::id();
@@ -88,7 +103,10 @@ class MainController extends Controller
         return view('cart',$data);
     }
 
-    // Акаунт пользователя
+    /**
+     * Акаунт пользователя
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function account(){
         $user = Auth::user();
         $userorder = Order::where('user_id',$user->id)->get(); // collection
@@ -112,50 +130,24 @@ class MainController extends Controller
         return view('account',$data);
     }
 
-    // Оформление заказ
+    /**
+     * Оформление заказ
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function orders(Request $request){
+
         $userid = Auth::id();
+        $products = Cart::getproduct();
+        $total = Cart::getsum();
         $user = Auth::user();
-        // Получаем массив id товаров
-        $ids = session()->get($userid);
 
-        // На всякий случай удалаем пусты значения
-        if(!empty($ids)){
-            $product_ids = array_filter($ids, function($element) {
-                return !empty($element);
-            });
-        } else {
-            $product_ids = [];
-        }
-
-        // Получаем список товаров по массиву id
-        if(!empty($product_ids)){
-            $products = Product::query()
-                ->whereIn('id', $product_ids)
-                ->get();
-        } else {
-            $products = [];
-        }
-
-        if (isset($products)&&(!empty($products))) {
-            $total = 0;
-            foreach ($products as $prod){
-                if(isset($prod['price'])){
-                    $total+=(int)$prod['price'];
-                }
-            }
-        } else {
-            $total = 0;
-        }
-
-        $productid = session('id');
         $data = [
             'user' => Auth::user()->name,
-            'id'=>$productid,
             'userid'=>$userid,
             'sessionid'=>session()->getId(),
             'products' => !empty($products)?$products:null,
-            'total'=>$total,
+            'total'=>!empty($total)?$total:null,
             // Данные пользователя
             'name'=>$user->name,
             'email'=>$user->email
@@ -167,17 +159,9 @@ class MainController extends Controller
     // Удаление товара из закза
     public function cartproductdel(Request $request){
 
-        $userid = Auth::id();
-        $prodid = $request->prodid;
-        $products = $request->session()->pull($userid);
+        $product_id= $request->prodid;
+        Cart::delproduct($product_id);
 
-        foreach ($products as $prod){
-            if($prod==$prodid){
-               // Arr::forget($products, $key);
-                continue;
-            }
-            session()->push($userid,$prod);
-        }
         return redirect('/cart');
     }
 
@@ -194,17 +178,8 @@ class MainController extends Controller
              ]
         );
 
-        // Получаем массив id товаров
-        $ids = session()->get($userid);
-
-        // Получаем список товаров по массиву id
-        if(!empty($ids)){
-            $products = Product::query()
-                ->whereIn('id', $ids)
-                ->get();
-        } else {
-            $products = [];
-        }
+        $products = Cart::getproduct();
+        $total = Cart::getsum();
 
         if (isset($products)&&(!empty($products))) {
             $arridproduct = [];
@@ -213,16 +188,6 @@ class MainController extends Controller
             }
         }
 
-        if (isset($products)&&(!empty($products))) {
-            $total = 0;
-            foreach ($products as $prod){
-                if(isset($prod['price'])){
-                    $total+=(int)$prod['price'];
-                }
-            }
-        } else {
-            $total = 0;
-        }
 
         $productsid = Product::find($arridproduct);
         $order->products()->attach($productsid);
@@ -231,7 +196,7 @@ class MainController extends Controller
             'total'=>$total
         ];
         // Удаляем товары из сессии (из корзины)
-        session()->forget($userid);
+        $cart = Cart::clearcart();
         return view('checkout',$data);
     }
 
