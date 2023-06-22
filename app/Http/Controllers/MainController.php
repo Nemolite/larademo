@@ -53,6 +53,8 @@ class MainController extends Controller
             $userid = Auth::id();
             // Записываем в сессию только id товара
             session()->push($userid,$prodid);
+            session()->push('ip_address',$prodid);
+
             return redirect('/');
         } else {
             return redirect('/home');
@@ -70,7 +72,7 @@ class MainController extends Controller
 
     // Вывод выбранных товаров
     public function cart(){
-
+dd(session()->all());
         $userid = Auth::id();
         // Получаем массив id товаров
         $ids = session()->get($userid);
