@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
@@ -45,22 +46,6 @@ class MainController extends Controller
         return view('index', $data );
     }
 
-    // Добавление товара в корзину
-    public function cartproduct(Request $request){
-
-        if (Auth::user()){
-            $prodid = $request->prodid;
-            $userid = Auth::id();
-            // Записываем в сессию только id товара
-            session()->push($userid,$prodid);
-            session()->push('ip_address',$prodid);
-
-            return redirect('/');
-        } else {
-            return redirect('/home');
-        }
-    }
-
     // Показать один продукт по клику Подробнее
     public function showproduct(Request $request){
         $product = Product::find($request->showprodid);
@@ -70,24 +55,27 @@ class MainController extends Controller
         return view('showproduct', $data );
     }
 
+    // Добавление товара в корзину
+    public function cartproduct(Request $request){
+
+        if (Auth::user()){
+            $product_id = $request->prodid;
+            Cart::addproduct($product_id);
+
+            return redirect('/');
+        } else {
+            return redirect('/admin');
+        }
+    }
+
+
+
     // Вывод выбранных товаров
     public function cart(){
-dd(session()->all());
+
         $userid = Auth::id();
-        // Получаем массив id товаров
-        $ids = session()->get($userid);
-
-        // Получаем список товаров по массиву id
-        if(!empty($ids)){
-            $products = Product::query()
-                ->whereIn('id', $ids)
-                ->get();
-
-            // Подсчет общей стоимости заказа
-            $total = Product::query()
-                ->whereIn('id', $ids)
-                ->sum('price');
-        }
+        $products = Cart::getproduct();
+        $total = Cart::getsum();
 
         $data = [
             'user' => Auth::user()->name,
