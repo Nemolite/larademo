@@ -41,7 +41,6 @@ class Cart extends Model
     }
 
     public function getsum(){
-        // Подсчет общей стоимости заказа
         $total = self::query()
             ->sum('price');
         return $total;
