@@ -2,7 +2,7 @@
 @section('cart')
     <h1>Корзина пользователя {{ $user }} (id = {{ $userid }})</h1>
 
-    @isset($products)
+    @if(!is_null($products)&&(!$products->isEmpty()))
         <table class="table">
             <thead>
             <tr>
@@ -53,8 +53,8 @@
             <input type="hidden"  name="sessionid" value="{{ $sessionid }}">
             <button type="submit" class="btn btn-primary">Оформить заказ</button>
         </form>
-    @endisset
-    @empty($products)
+
+    @else
         <h3>Ваша корзина пуста</h3>
-    @endempty
+    @endif
 @endsection

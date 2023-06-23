@@ -25,7 +25,7 @@
                     <td><p>{{ $prod['price'] }}</p></td>
                     <td><p>{{ $prod['country'] }}</p></td>
                     <td><p>{{ $prod['description'] }}</p></td>
-                    <td><p>{{ \App\Models\Cart::find($prod['id'])->quantity }}</p></td>
+                    <td><p>{{ \App\Models\Cart::where(['product_id'=>$prod['id']])->get()->first()->quantity }}</p></td>
                     <td>
                         @isset($prod['image'])
                             <div class="mini-img">

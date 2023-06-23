@@ -106,33 +106,6 @@ class MainController extends Controller
     }
 
     /**
-     * Акаунт пользователя
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function account(){
-        $user = Auth::user();
-        $userorder = Order::where('user_id',$user->id)->get(); // collection
-        $products =[];
-        $total = [];
-
-        foreach ($userorder as $order){
-            $products[$order->id] = $order->products;
-            $total[$order->id] = $order->products->sum('price');
-        }
-
-        $data = [
-            'name'=>$user->name,
-            'email'=>$user->email,
-            'userorder'=>$userorder,
-            'total'=>$total,
-            'products'=>$products,
-
-        ];
-
-        return view('account',$data);
-    }
-
-    /**
      * Оформление заказ
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -140,8 +113,8 @@ class MainController extends Controller
     public function orders(Request $request){
 
         $userid = Auth::id();
-        $products = Cart::getproduct();
-        $total = Cart::getsum();
+        $products = Cart::getproduct($userid);
+        $total = Cart::getsum($userid);
         $user = Auth::user();
 
         $data = [
@@ -159,7 +132,7 @@ class MainController extends Controller
     }
 
     /**
-     * Удаление товара из закза
+     * Удаление товара из корзины
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -188,8 +161,8 @@ class MainController extends Controller
              ]
         );
 
-        $products = Cart::getproduct();
-        $total = Cart::getsum();
+        $products = Cart::getproduct($userid);
+        $total = Cart::getsum($userid);
 
         if (isset($products)&&(!empty($products))) {
             $arridproduct = [];
@@ -203,11 +176,38 @@ class MainController extends Controller
         $order->products()->attach($productsid);
         $data = [
            'productsid'=> $productsid,
-            'total'=>$total
+            'total'=>$total,
+            'userid'=>Auth::id()
         ];
-        // Удаляем товары из сессии (из корзины)
-        $cart = Cart::clearcart();
+
         return view('checkout',$data);
+    }
+
+    /**
+     * Акаунт пользователя
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function account(){
+        $user = Auth::user();
+        $userorder = Order::where('user_id',$user->id)->get(); // collection
+        $products =[];
+        $total = [];
+
+        foreach ($userorder as $order){
+            $products[$order->id] = $order->products;
+            $total[$order->id] = $order->products->sum('price');
+        }
+
+        $data = [
+            'name'=>$user->name,
+            'email'=>$user->email,
+            'userorder'=>$userorder,
+            'total'=>$total,
+            'products'=>$products,
+
+        ];
+
+        return view('account',$data);
     }
 
     /**

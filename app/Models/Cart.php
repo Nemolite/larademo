@@ -94,8 +94,12 @@ class Cart extends Model
      * Очистка корзины
      * @return mixed
      */
-    public function clearcart(){
-        return self::where(['session_id'=>session()->getId()])->delete();
+    public function clearcart($userid){
+        $session_id = session()->getId();
+        self::where([
+            'session_id'=>$session_id,
+            'user_id'=>$userid
+        ])->delete();
     }
 
     /**
