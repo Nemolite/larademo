@@ -74,7 +74,9 @@ class MainController extends Controller
     public function cartproduct(Request $request){
         if (Auth::user()){
             $product_id = $request->prodid;
-            Cart::addproduct($product_id);
+            $user_id= Auth::id();
+
+            Cart::addproduct($product_id,$user_id);
 
             return redirect('/');
         } else {
@@ -89,8 +91,8 @@ class MainController extends Controller
     public function cart(){
 
         $userid = Auth::id();
-        $products = Cart::getproduct();
-        $total = Cart::getsum();
+        $products = Cart::getproduct($userid);
+        $total = Cart::getsum($userid);
 
         $data = [
             'user' => Auth::user()->name,
