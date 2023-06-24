@@ -19,7 +19,7 @@ class MainController extends Controller
      */
     public function index(){
         $category = Category::paginate(5);
-        $product = Product::paginate(6);
+        $product = Product::orderBy('id', 'desc')->paginate(6);
         $data = [
             'category'=> $category,
             'product'=> $product,
@@ -214,7 +214,10 @@ class MainController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function onas(){
-        $products = DB::table('products')->limit(5)->get();
+        $products = DB::table('products')
+            ->limit(5)
+            ->orderBy('id', 'desc')
+            ->get();
 
         $data = [
             'products'=>$products
