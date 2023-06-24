@@ -15,11 +15,13 @@ class OrderController extends Controller
     public function adminorders(){
         $orders = Order::all();
         $products =[];
-        $total = 0;
+        $total = [];
         foreach ($orders as $order){
-            $products[] = $order->products;
-            $total = $order->products->sum('price');
+            $products[$order->id] = $order->products;
+            $total[$order->id] = $order->products->sum('price');
         }
+
+        //dd($products);
 
         $data =[
             'orders'=>$orders,

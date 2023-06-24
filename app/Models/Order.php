@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $table = 'orders';
-    protected $fillable = ['user_id','name', 'email', 'phone','address'];
+    protected $fillable = ['user_id','name', 'email', 'phone','address','status'];
 
     // Инверсия отвношения один ко многим
     // т.е у одного пользователя может быть несколько заказов
