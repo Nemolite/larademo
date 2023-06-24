@@ -13,6 +13,7 @@ class OrderController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function adminorders(){
+
         $orders = Order::all();
         $products =[];
         $total = [];
@@ -29,5 +30,13 @@ class OrderController extends Controller
             'total'=>$total
         ];
         return view('adminorders',$data);
+    }
+
+    public function adminordersstatus(Request $request){
+        $order = Order::find($request->orderid);
+        $order ->status = $request->status;
+        $order->save();
+        return redirect('adminorders');
+
     }
 }

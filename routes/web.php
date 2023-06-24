@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function() {
 
         // Работа с заказами
         Route::get('/adminorders',[\App\Http\Controllers\OrderController::class, 'adminorders'])->name('adminorders');
+        Route::post('/adminorders',[\App\Http\Controllers\OrderController::class, 'adminordersstatus'])->name('adminordersstatus');
 
     // users
 
@@ -65,7 +66,7 @@ Route::middleware('auth')->group(function() {
         // Оформление заказ
         Route::post('/orders',[\App\Http\Controllers\MainController::class, 'orders'])->name('orders');
 
-        // Удаление товара из заказа
+        // Удаление товара из корзины
         Route::post('/cartproductdel',[\App\Http\Controllers\MainController::class, 'cartproductdel'])->name('cartproductdel');
 
         // Подтверждение заказ

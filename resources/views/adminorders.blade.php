@@ -37,7 +37,19 @@
                             @endisset
 
                         </td>
-                        <td><p class="order-status">Заказ выполнен</p></td>
+                        <td>
+                            <form method="post" action="{{ route('adminordersstatus') }}" class="formstatus" name="formstatus{{ $order->id }}">
+                                @csrf
+                                <input type="hidden"  name="orderid" value="{{ $order->id }}">
+                                <select class="form-select" name="status">
+                                    <option selected><p class="order-status">{{ $order->status }}</p></option>
+                                    <option value="Новый">Новый</option>
+                                    <option value="Подтверждено">Подтверждено</option>
+                                    <option value="Отменено">Отменено</option>
+                                </select>
+                            </form>
+
+                        </td>
                     </tr>
                 @endforeach
 
