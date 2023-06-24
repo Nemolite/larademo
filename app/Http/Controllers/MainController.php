@@ -137,10 +137,9 @@ class MainController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function cartproductdel(Request $request){
-
+        $user_id =Auth::id();
         $product_id= $request->prodid;
-        Cart::delproduct($product_id);
-
+        Cart::delproduct($product_id,$user_id);
         return redirect('/cart');
     }
 

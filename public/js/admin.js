@@ -21,7 +21,10 @@ deletecategory.forEach(item => {
     });
 })
 
-
+/**
+ * Изменение статуса в админке
+ * @type {NodeListOf<Element>}
+ */
 let formstatus = document.querySelectorAll('.formstatus')
 formstatus.forEach(item => {
     item.addEventListener("change", function (e) {

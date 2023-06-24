@@ -32,6 +32,11 @@ class OrderController extends Controller
         return view('adminorders',$data);
     }
 
+    /**
+     * Изменение статуса в админке
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function adminordersstatus(Request $request){
         $order = Order::find($request->orderid);
         $order ->status = $request->status;

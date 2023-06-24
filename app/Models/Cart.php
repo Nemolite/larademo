@@ -107,15 +107,25 @@ class Cart extends Model
      * @param $product_id
      * @return void
      */
-    public function delproduct($product_id){
-        $count_products = self::where(['product_id'=>$product_id])->count();
+    public function delproduct($product_id,$user_id){
+        $session_id = session()->getId();
+        $count_products = self::where([
+            'product_id'=>$product_id,
+            'session_id'=>$session_id,
+            'user_id'=>$user_id
+            ])->first();
 
-        if (1==$count_products){
-            self::where(['product_id'=>$product_id])->delete();
-        } elseif (1<$count_products){
-            self::where(['product_id'=>$product_id])->first()->delete();
+        $quantity = $count_products->quantity;
+        if (1==$quantity){
+            self::where([
+                'product_id'=>$product_id,
+                'session_id'=>$session_id,
+                'user_id'=>$user_id
+            ])->delete();
+        } elseif (1<$quantity){
+            $quantity--;
+            $count_products->quantity = $quantity;
+            $count_products->save();
         }
-
     }
-
 }
