@@ -34,6 +34,7 @@ formstatus.forEach(item => {
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log("Статус заказа изменен");
+
             }
             else {
                 console.log("Что-то пошло не так");

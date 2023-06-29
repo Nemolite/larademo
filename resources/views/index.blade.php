@@ -13,7 +13,7 @@
     @isset($product)
         <h1>Каталог товаров</h1>
         <h3>Сортировка товаров</h3>
-        <form method="post" action="{{ route('indexsort') }}" class="formsort" name="formsort">
+        <form method="post" action="" class="formsort" name="formsort">
             @csrf
             <select class="form-select" name="sort">
                 <option value="1" selected><p class="order-status">{{ __('С начало новые') }}</p></option>
