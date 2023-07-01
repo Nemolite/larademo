@@ -13,16 +13,34 @@
     @isset($product)
         <h1>Каталог товаров</h1>
         <h3>Сортировка товаров</h3>
-        <form method="post" action="" class="formsort" name="formsort">
-            @csrf
-            <select class="form-select" name="sort">
-                <option value="1" selected><p class="order-status">{{ __('С начало новые') }}</p></option>
-                <option value="2">{{ __('С начало старые') }}</option>
-                <option value="3">{{ __('По стране поставщика') }}</option>
-                <option value="4">{{ __('По наименованию') }}</option>
-                <option value="5">{{ __('По цене') }}</option>
-            </select>
-        </form>
+        <div class="sort">
+            <form method="post" action="{{ route('index') }}" class="formsort" name="formsort">
+                @csrf
+                <input type="hidden"  name="sort" value="1">
+                <input type="submit" value="{{ __('С начало новые') }}">
+            </form>
+            <form method="post" action="{{ route('index') }}" class="formsort" name="formsort">
+                @csrf
+                <input type="hidden"  name="sort" value="2">
+                <input type="submit" value="{{ __('С начало старые') }}">
+            </form>
+            <form method="post" action="{{ route('index') }}" class="formsort" name="formsort">
+                @csrf
+                <input type="hidden"  name="sort" value="3">
+                <input type="submit" value="{{ __('По стране поставщика') }}">
+            </form>
+            <form method="post" action="{{ route('index') }}" class="formsort" name="formsort">
+                @csrf
+                <input type="hidden"  name="sort" value="4">
+                <input type="submit" value="{{ __('По наименованию') }}">
+            </form>
+            <form method="post" action="{{ route('index') }}" class="formsort" name="formsort">
+                @csrf
+                <input type="hidden"  name="sort" value="5">
+                <input type="submit" value="{{ __('По цене') }}">
+            </form>
+        </div>
+
         <div class="container">
                 <div class="row">
                     @foreach ($product as $prod)

@@ -194,3 +194,8 @@ nav {
 .order-status {
     color:#1e7e34;
 }
+
+.sort {
+    display: flex;
+    justify-content: center;
+}

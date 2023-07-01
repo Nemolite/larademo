@@ -8,7 +8,11 @@ $('.slider').slick({
     adaptiveHeight: true
 });
 
-
+/**
+ * Сортировка
+ * @type {Element}
+ */
+/*
 let formsort = document.querySelector('.formsort')
 formsort.addEventListener("change", function (e) {
         e.preventDefault()
@@ -25,4 +29,4 @@ formsort.addEventListener("change", function (e) {
         xhr.open("POST", "/");
         xhr.send(formData);
     });
-
+*/

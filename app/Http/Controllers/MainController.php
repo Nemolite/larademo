@@ -18,9 +18,7 @@ class MainController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(Request $request){
-        $product  = session('product');
-        //dd($product);
-        if ($product==null){
+
             switch ($request->sort) {
                 case 1:
                     $product = Product::orderBy('id', 'desc')->paginate(6);
@@ -40,44 +38,15 @@ class MainController extends Controller
                 default:
                     $product = Product::orderBy('id', 'desc')->paginate(6);
             }
-            session(['product' => $product]);
-            return redirect('/');
-        } else {
+
             $category = Category::paginate(5);
             $data = [
                 'category'=> $category,
                 'product'=> $product,
-
             ];
             return view('index', $data );
-        }
-    }
-/*
-    public function indexsort(Request $request){
-        switch ($request->sort) {
-            case 1:
-                $product = Product::orderBy('id', 'desc')->paginate(6);
-                break;
-            case 2:
-                $product = Product::orderBy('id', 'asc')->paginate(6);
-                break;
-            case 3:
-                $product = Product::orderBy('country', 'desc')->paginate(6);
-                break;
-            case 4:
-                $product = Product::orderBy('name', 'desc')->paginate(6);
-                break;
-            case 5:
-                $product = Product::orderBy('price', 'desc')->paginate(6);
-                break;
-            default:
-                $product = Product::orderBy('id', 'desc')->paginate(6);
-        }
-        session(['product' => $product]);
-        return redirect('/');
 
     }
-*/
     /**
      * Отображение списка категрий
      * @param $id
