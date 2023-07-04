@@ -34,6 +34,7 @@ Route::post('/contacts',[\App\Http\Controllers\MainController::class, 'contacts'
 Auth::routes();
 // Панель управления магазином (только для админа)
 Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 // https://habr.com/ru/articles/671018/
 Route::middleware('auth')->group(function() {
