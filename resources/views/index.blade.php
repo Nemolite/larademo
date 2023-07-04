@@ -59,12 +59,13 @@
                                     <button type="submit" class="btn btn-success">Подробно</button>
                                 </form>
                             </div>
-
+                            @auth
                             <form method="post" action="{{ route('cartproduct') }}">
                                 @csrf
                                 <input type="hidden"  name="prodid" value="{{ $prod->id }}">
                                 <button type="submit" class="btn btn-success">Добавить в корзину</button>
                             </form>
+                            @endauth
                         </div>
                     @endforeach
 

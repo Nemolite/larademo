@@ -24,12 +24,13 @@
                 </div>
             </div> <!-- class="row" -->
         </div> <!-- class="showproduct-main" -->
+        @auth
         <form method="post" action="{{ route('cartproduct') }}">
             @csrf
             <input type="hidden"  name="prodid" value="{{ $product->id }}">
             <button type="submit" class="btn btn-success">Добавить в корзину</button>
         </form>
-
+        @endauth
     </div>
 @endsection
 
