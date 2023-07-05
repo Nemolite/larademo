@@ -13,7 +13,26 @@
     <h1>Фильтры товаров</h1>
     <div class="filter">
         <form method="post" action="{{ route('index') }}" class="formfilter" name="formfilter">
-            <input type="hidden"  name="filter" value="5">
+            @csrf
+            <div class="input-group">
+                <span class="input-group-text">Введите диапозин цен</span>
+                <input type="number"
+                       min="{{ $min }}"
+                       max="{{ $max }}"
+                       step="100"
+                       name ="priceot"
+                       id="priceot"
+                       value="{{ $min }}"
+                >
+                <input type="number"
+                       min="{{ $min }}"
+                       max="{{ $max }}"
+                       step="100"
+                       name ="pricedo"
+                       id="pricedo"
+                       value="{{ $max }}"
+                >
+            </div>
             <input type="submit" value="{{ __('Применить') }}">
         </form>
     </div>

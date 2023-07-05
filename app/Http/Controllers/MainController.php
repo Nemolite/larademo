@@ -19,6 +19,13 @@ class MainController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(Request $request){
+
+            $priceot = $request->priceot;
+            $pricedo = $request->pricedo;
+
+            $min = Product::query()->min('price');
+            $max = Product::query()->max('price');
+
             $sort = $request->sort;
 
             if (empty($sort)) {
@@ -28,12 +35,14 @@ class MainController extends Controller
             $request->session()->put('sort', $sort);
 
             $selector = new Selector;
-            $product =$selector->switchsort($sort);
+            $product =$selector->switchsort($sort,$priceot,$pricedo);
 
             $category = Category::paginate(5);
             $data = [
                 'category'=> $category,
                 'product'=> $product,
+                'min'=>$min,
+                'max'=>$max
             ];
             return view('index', $data );
 
@@ -44,6 +53,9 @@ class MainController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function cat($id){
+        $min = Product::query()->min('price');
+        $max = Product::query()->max('price');
+
         $cat = Category::find($id);
         $product_cat = $cat->products; // вернет все продукты для категории $id
         $product_ids = [];
@@ -51,15 +63,16 @@ class MainController extends Controller
            $product_ids[] =  $prod->id;
        }
 
-        $product = Product::query()
-            ->whereIn('id', $product_ids)
-            ->paginate(6);
+        $sort = session('sort');
+        $selector = new Selector;
+        $product = $selector->switchsortcrt($sort,$product_ids);
 
         $category = Category::paginate(5);
-
         $data = [
             'category'=> $category,
             'product'=> $product,
+            'min'=>$min,
+            'max'=>$max
         ];
 
         return view('index', $data );
