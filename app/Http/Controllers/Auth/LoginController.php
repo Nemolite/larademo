@@ -40,14 +40,30 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
+    /**
+     * Переход после входа
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\UrlGenerator|string
+     */
     protected function redirectTo(){
         return url('/account',auth()->user()->id);
     }
 
+    /**
+     * Переход после выхода
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function logout() {
         Auth::logout();
         return redirect('/onas');
+    }
+
+    /**
+     * Изменение входа по Логин и Пароль
+     * @return string
+     */
+    public function username()
+    {
+        return 'login';
     }
 
 }

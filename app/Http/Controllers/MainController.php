@@ -35,7 +35,7 @@ class MainController extends Controller
             $request->session()->put('sort', $sort);
 
             $selector = new Selector;
-            $product =$selector->switchsort($sort,$priceot,$pricedo);
+            $product =$selector->switchsort($sort,$priceot=$min,$pricedo=$max);
 
             $category = Category::paginate(5);
             $data = [
