@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Services\Selector;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -18,26 +19,16 @@ class MainController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(Request $request){
+            $sort = $request->sort;
 
-            switch ($request->sort) {
-                case 1:
-                    $product = Product::orderBy('id', 'desc')->paginate(6);
-                    break;
-                case 2:
-                    $product = Product::orderBy('id', 'asc')->paginate(6);
-                    break;
-                case 3:
-                    $product = Product::orderBy('country', 'desc')->paginate(6);
-                    break;
-                case 4:
-                    $product = Product::orderBy('name', 'desc')->paginate(6);
-                    break;
-                case 5:
-                    $product = Product::orderBy('price', 'desc')->paginate(6);
-                    break;
-                default:
-                    $product = Product::orderBy('id', 'desc')->paginate(6);
+            if (empty($sort)) {
+                $sort = session('sort');
             }
+
+            $request->session()->put('sort', $sort);
+
+            $selector = new Selector;
+            $product =$selector->switchsort($sort);
 
             $category = Category::paginate(5);
             $data = [
@@ -59,6 +50,7 @@ class MainController extends Controller
        foreach ($product_cat as $prod){
            $product_ids[] =  $prod->id;
        }
+
         $product = Product::query()
             ->whereIn('id', $product_ids)
             ->paginate(6);

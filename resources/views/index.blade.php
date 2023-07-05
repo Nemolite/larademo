@@ -9,6 +9,16 @@
         {{ $category->links() }}
     @endisset
 @endsection
+@section('filter')
+    <h1>Фильтры товаров</h1>
+    <div class="filter">
+        <form method="post" action="{{ route('index') }}" class="formfilter" name="formfilter">
+            <input type="hidden"  name="filter" value="5">
+            <input type="submit" value="{{ __('Применить') }}">
+        </form>
+    </div>
+
+@endsection
 @section('content')
     @isset($product)
         <h1>Каталог товаров</h1>

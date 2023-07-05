@@ -59,6 +59,8 @@
     <div class="main">
         <div class="main-sidebar">
             @yield('sidebar')
+            @yield('filter')
+
         </div>
         <div class="main-content">
             @yield('content')
