@@ -105,10 +105,15 @@
 
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="ruls" value="" id="rules" checked>
+                            <input class="form-check-input" type="checkbox" name="ruls" value="1" id="rules" checked>
                             <label class="form-check-label" for="rules">
                                 Cогласие с правилами регистрации
                             </label>
+                            @error('ruls')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
 
                         <div class="row mb-0">
