@@ -41,6 +41,11 @@
 @section('content')
     @isset($product)
         <h1>Каталог товаров</h1>
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
         <h3>Сортировка товаров</h3>
         <div class="sort">
             <form method="post" action="{{ route('index') }}" class="formsort" name="formsort">

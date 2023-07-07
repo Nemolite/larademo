@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Services\Counter;
 use App\Services\Selector;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -101,9 +102,18 @@ class MainController extends Controller
             $product_id = $request->prodid;
             $user_id= Auth::id();
 
-            Cart::addproduct($product_id,$user_id);
+            $counter= new Counter();
+            $countproduct = $counter->countproduct($product_id);
+            $countproductcart = $counter->countproductcart($product_id,$user_id);
 
-            return redirect('/');
+             if ($countproduct>$countproductcart) {
+                 Cart::addproduct($product_id,$user_id);
+                 return redirect('/')->with('status', 'Товар добавлен!');
+             }  else {
+                 return redirect('/')->with('status', 'Нельзя добавить товар!');
+             }
+
+
         } else {
             return redirect('/admin');
         }

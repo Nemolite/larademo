@@ -105,7 +105,8 @@
 
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="ruls" value="1" id="rules" checked>
+                            <input type="hidden" name="ruls" value="0">
+                            <input class="form-check-input" type="checkbox" name="ruls" value="1">
                             <label class="form-check-label" for="rules">
                                 Cогласие с правилами регистрации
                             </label>
