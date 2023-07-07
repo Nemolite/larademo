@@ -41,9 +41,14 @@
 @section('content')
     @isset($product)
         <h1>Каталог товаров</h1>
-        @if (session('status'))
+        @if (session('statusyes'))
             <div class="alert alert-success">
-                {{ session('status') }}
+                {{ session('statusyes') }}
+            </div>
+        @endif
+        @if (session('statusno'))
+            <div class="alert alert-danger">
+                {{ session('statusno') }}
             </div>
         @endif
         <h3>Сортировка товаров</h3>

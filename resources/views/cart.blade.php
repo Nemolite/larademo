@@ -51,8 +51,15 @@
         <form method="post" action="{{ route('orders') }}">
             @csrf
             <input type="hidden"  name="sessionid" value="{{ $sessionid }}">
-            <button type="submit" class="btn btn-primary">Оформить заказ</button>
+            <label for="pass">Для формирования заказа введите пароль</label>
+            <input type="password" name="pass" id="pass">
+            <button type="submit" class="btn btn-primary">Сформировать заказ</button>
         </form>
+        @if (session('statusorder'))
+            <div class="alert alert-danger">
+                {{ session('statusorder') }}
+            </div>
+        @endif
 
     @else
         <h3>Ваша корзина пуста</h3>

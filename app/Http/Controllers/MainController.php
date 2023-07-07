@@ -6,12 +6,14 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use App\Services\Counter;
 use App\Services\Selector;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MainController extends Controller
 {
@@ -108,9 +110,9 @@ class MainController extends Controller
 
              if ($countproduct>$countproductcart) {
                  Cart::addproduct($product_id,$user_id);
-                 return redirect('/')->with('status', 'Товар добавлен!');
+                 return redirect('/')->with('statusyes', 'Товар добавлен!');
              }  else {
-                 return redirect('/')->with('status', 'Нельзя добавить товар!');
+                 return redirect('/')->with('statusno', 'Нельзя добавить товар!');
              }
 
 
@@ -146,24 +148,32 @@ class MainController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function orders(Request $request){
+       $pass = $request->pass;
+       $password = User::find(Auth::id());
+          if (Hash::check($pass,$password->password)) {
 
-        $userid = Auth::id();
-        $products = Cart::getproduct($userid);
-        $total = Cart::getsum($userid);
-        $user = Auth::user();
+              $userid = Auth::id();
+              $products = Cart::getproduct($userid);
+              $total = Cart::getsum($userid);
+              $user = Auth::user();
 
-        $data = [
-            'user' => Auth::user()->name,
-            'userid'=>$userid,
-            'sessionid'=>session()->getId(),
-            'products' => !empty($products)?$products:null,
-            'total'=>!empty($total)?$total:null,
-            // Данные пользователя
-            'name'=>$user->name,
-            'email'=>$user->email
-        ];
+              $data = [
+                  'user' => Auth::user()->name,
+                  'userid'=>$userid,
+                  'sessionid'=>session()->getId(),
+                  'products' => !empty($products)?$products:null,
+                  'total'=>!empty($total)?$total:null,
+                  // Данные пользователя
+                  'name'=>$user->name,
+                  'email'=>$user->email
+              ];
 
-        return view('orders',$data);
+              return view('orders',$data);
+
+          } else {
+              return redirect()->back()->with('statusorder', 'Вы не верно ввели пароль');
+          }
+
     }
 
     /**
