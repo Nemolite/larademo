@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function() {
         // Работа с заказами
         Route::get('/adminorders',[\App\Http\Controllers\OrderController::class, 'adminorders'])->name('adminorders');
         Route::post('/adminorders',[\App\Http\Controllers\OrderController::class, 'adminordersstatus'])->name('adminordersstatus');
+        Route::post('/adminordersfilter',[\App\Http\Controllers\OrderController::class, 'adminordersfilter'])->name('adminordersfilter');
 
     // users
 

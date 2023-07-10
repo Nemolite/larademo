@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Order;
 use App\Models\Product;
 
 class Selector
@@ -92,4 +93,40 @@ class Selector
         }
         return $product;
     }
+
+    public function switchsortorders($ordersfilter){
+        switch ($ordersfilter) {
+            case 1:
+                $orders = Order::select()
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                break;
+            case 2:
+                $orders = Order::select()
+                    ->where('status','Новый')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                break;
+            case 3:
+                $orders = Order::select()
+                    ->where('status','Подтверждено')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                break;
+            case 4:
+                $orders = Order::select()
+                    ->where('status','Отменено')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                break;
+            default:
+                $orders = Order::select()
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        }
+        return $orders;
+    }
+
+
+
 }

@@ -228,6 +228,11 @@ class MainController extends Controller
         return view('checkout',$data);
     }
 
+    /**
+     * Возможность удалить последний (новый) заказ
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function formdelorder(Request $request){
         DB::table('order_product')->where('order_id',$request->delorder)->delete();
         Order::find($request->delorder)->delete();
