@@ -202,6 +202,7 @@ class MainController extends Controller
                  'email'=>$request->email,
                  'phone'=>$request->phone,
                  'address'=>$request->address,
+                 'status'=>'Подтверждено',
              ]
         );
 
@@ -227,13 +228,22 @@ class MainController extends Controller
         return view('checkout',$data);
     }
 
+    public function formdelorder(Request $request){
+        DB::table('order_product')->where('order_id',$request->delorder)->delete();
+        Order::find($request->delorder)->delete();
+
+        return redirect()->back()->with('delstatus','Ваш полседний зкакз успешно удален');
+    }
+
     /**
      * Акаунт пользователя
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function account(){
         $user = Auth::user();
-        $userorder = Order::where('user_id',$user->id)->get(); // collection
+        $userorder = Order::where('user_id',$user->id)
+                            ->orderBy('created_at', 'desc')
+                            ->get(); // collection
         $products =[];
         $total = [];
 

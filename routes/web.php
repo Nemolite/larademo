@@ -68,6 +68,9 @@ Route::middleware('auth')->group(function() {
         // Оформление заказ
         Route::post('/orders',[\App\Http\Controllers\MainController::class, 'orders'])->name('orders');
 
+        // Возможность удаление последнего заказа formdelorder
+       Route::post('/formdelorder',[\App\Http\Controllers\MainController::class, 'formdelorder'])->name('formdelorder');
+
         // Удаление товара из корзины
         Route::post('/cartproductdel',[\App\Http\Controllers\MainController::class, 'cartproductdel'])->name('cartproductdel');
 
