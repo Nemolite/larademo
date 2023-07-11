@@ -39,6 +39,10 @@ class OrderController extends Controller
     public function adminordersstatus(Request $request){
         $order = Order::find($request->orderid);
         $order ->status = $request->status;
+        if(!empty($request->cancel)){
+            $order ->reason = $request->cancel;
+        }
+
         $order->save();
         return redirect('adminorders');
 

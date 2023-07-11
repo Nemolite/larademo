@@ -29,7 +29,13 @@ let formstatus = document.querySelectorAll('.formstatus')
 formstatus.forEach(item => {
     item.addEventListener("change", function (e) {
         e.preventDefault()
-        let formData = new FormData(item)
+        let status = item.querySelector('[name="status"]').value;
+        if (status == "Отменено") {
+            var cancel  = prompt('Причина отмены?', 'Без причины');
+        }
+        console.log(cancel);
+        let formData = new FormData(item);
+        formData.append("cancel",cancel);
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {

@@ -73,7 +73,7 @@
                                     <option value="Отменено">Отменено</option>
                                 </select>
                             </form>
-
+                            <p>Причина отмены: {{  }}</p>
                         </td>
                     </tr>
                 @endforeach
