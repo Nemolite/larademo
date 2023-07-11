@@ -212,21 +212,18 @@ class MainController extends Controller
 
         if (isset($products)&&(!empty($products))) {
             $arridproduct = [];
-            $quantity = [];
             foreach ($products as $prod){
                 $arridproduct[] = (int)$prod['id'];
-               // $quantity[$prod['id']] = $prod['quantity'];
                 $product = Product::find($prod['id']);
-                $order->products()->attach($product, ['quantity_product' => $prod['quantity']]);
+                $quantity = Cart::query()->where('product_id',$prod['id'] )->get()->first();
+                $order->products()->attach($product, ['quantity_product' => $quantity->quantity]);
             }
         }
 
 
         $productsid = Product::find($arridproduct);
-    //    $order->products()->attach($productsid, ['quantity_product' => $prod['quantity']]);
         $data = [
            'productsid'=> $productsid,
-          //  'quantity'=>$quantity,
             'total'=>$total,
             'userid'=>Auth::id()
         ];
