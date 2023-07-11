@@ -14,6 +14,7 @@
                 <th scope="col">Стоимость</th>
                 <th scope="col">Страна</th>
                 <th scope="col">Описание товара</th>
+                <th scope="col">Количество товара</th>
                 <th scope="col">Миниатюра</th>
             </tr>
             </thead>

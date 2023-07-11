@@ -19,7 +19,7 @@
                 <th scope="col">№ Заказа</th>
                 <th scope="col">Дата заказа</th>
                 <th scope="col">Стоимость заказа</th>
-                <th scope="col">Заказанный товар</th>
+                <th scope="col">Товар / Кол-во</th>
                 <th scope="col">Статус заказа</th>
             </tr>
             </thead>
@@ -37,7 +37,14 @@
                     <td>
                         @isset( $products)
                             @foreach ($products[$order->id] as $product)
-                                    <p>{{ $product->name }}</p>
+                                    <p>
+                                        {{ $product->name }} /
+                                        {{ Illuminate\Support\Facades\DB::table('order_product')
+                                            ->where('product_id',$product->id)
+                                            ->where('order_id',$order->id)
+                                            ->get()->first()->quantity_product
+                                         }}
+                                    </p>
                             @endforeach
                                 <hr>
                         @endisset

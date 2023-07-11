@@ -43,7 +43,7 @@ class Cart extends Model
     }
 
     /**
-     * Получение и показ товаров в корзине
+     * Получение товаров из корзины
      * @return mixed
      */
     public function getproduct($user_id){

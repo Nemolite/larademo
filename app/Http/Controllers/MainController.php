@@ -194,6 +194,7 @@ class MainController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function checkout(Request $request){
+
         $userid = Auth::id();
         $order = Order::create(
              [
@@ -211,16 +212,21 @@ class MainController extends Controller
 
         if (isset($products)&&(!empty($products))) {
             $arridproduct = [];
+            $quantity = [];
             foreach ($products as $prod){
                 $arridproduct[] = (int)$prod['id'];
+               // $quantity[$prod['id']] = $prod['quantity'];
+                $product = Product::find($prod['id']);
+                $order->products()->attach($product, ['quantity_product' => $prod['quantity']]);
             }
         }
 
 
         $productsid = Product::find($arridproduct);
-        $order->products()->attach($productsid);
+    //    $order->products()->attach($productsid, ['quantity_product' => $prod['quantity']]);
         $data = [
            'productsid'=> $productsid,
+          //  'quantity'=>$quantity,
             'total'=>$total,
             'userid'=>Auth::id()
         ];
@@ -254,6 +260,7 @@ class MainController extends Controller
 
         foreach ($userorder as $order){
             $products[$order->id] = $order->products;
+
             $total[$order->id] = $order->products->sum('price');
         }
 
@@ -263,6 +270,7 @@ class MainController extends Controller
             'userorder'=>$userorder,
             'total'=>$total,
             'products'=>$products,
+
 
         ];
 
