@@ -19,7 +19,7 @@
     <div class="header-main">
         <div class="headre-logo">
             <a href="{{ route('index') }}">
-                <img src="{{ asset("images/logo.png") }}" alt="Логотип">
+                <img src="{{ asset("images/mirflavers.png") }}" alt="Логотип">
             </a>
         </div>
         <div class="header-menu">

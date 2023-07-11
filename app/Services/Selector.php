@@ -53,6 +53,12 @@ class Selector
         return $product;
     }
 
+    /**
+     * Упорядочить товары в корзине
+     * @param $sort
+     * @param $product_ids
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
         public function switchsortcrt($sort,$product_ids){
         switch ($sort) {
             case 1:
@@ -94,6 +100,11 @@ class Selector
         return $product;
     }
 
+    /**
+     * Упорядочить заказы в админке
+     * @param $ordersfilter
+     * @return mixed
+     */
     public function switchsortorders($ordersfilter){
         switch ($ordersfilter) {
             case 1:
@@ -126,7 +137,4 @@ class Selector
         }
         return $orders;
     }
-
-
-
 }

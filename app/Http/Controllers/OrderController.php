@@ -44,6 +44,11 @@ class OrderController extends Controller
 
     }
 
+    /**
+     * Возможность сортировки заказов в админке
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function adminordersfilter(Request $request){
         $ordersfilter = $request->ordersfilter;
         $selector = new Selector();
