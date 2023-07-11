@@ -73,7 +73,9 @@
                                     <option value="Отменено">Отменено</option>
                                 </select>
                             </form>
-                            <p>Причина отмены: {{  }}</p>
+                            @if ($reason[$order->id] )
+                            <p>Причина отмены: {{ $reason[$order->id] }}</p>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

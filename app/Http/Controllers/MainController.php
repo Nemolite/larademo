@@ -257,7 +257,7 @@ class MainController extends Controller
 
         foreach ($userorder as $order){
             $products[$order->id] = $order->products;
-
+            $reason[$order->id] = $order->reason;
             $total[$order->id] = $order->products->sum('price');
         }
 
@@ -267,6 +267,7 @@ class MainController extends Controller
             'userorder'=>$userorder,
             'total'=>$total,
             'products'=>$products,
+            'reason'=>$reason,
 
 
         ];

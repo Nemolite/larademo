@@ -16,16 +16,19 @@ class OrderController extends Controller
     public function adminorders(){
         $selector = new Selector();
         $orders = $selector->switchsortorders($ordersfilter=0);
+        $reason = [];
         $products =[];
         $total = [];
         foreach ($orders as $order){
             $products[$order->id] = $order->products;
             $total[$order->id] = $order->products->sum('price');
+            $reason[$order->id] = $order->reason;
         }
 
         $data =[
             'orders'=>$orders,
             'products' =>$products,
+            'reason'=>$reason,
             'total'=>$total
         ];
         return view('adminorders',$data);
@@ -62,11 +65,13 @@ class OrderController extends Controller
         foreach ($orders as $order){
             $products[$order->id] = $order->products;
             $total[$order->id] = $order->products->sum('price');
+            $reason[$order->id] = $order->reason;
         }
 
         $data =[
             'orders'=>$orders,
             'products' =>$products,
+            'reason'=>$reason,
             'total'=>$total
         ];
         return view('adminorders',$data);

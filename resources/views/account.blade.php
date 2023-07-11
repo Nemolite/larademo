@@ -50,7 +50,13 @@
                         @endisset
                     </td>
                     <td>
-                        <p class="order-status">{{ $order->status }}</p>
+                        <p class="order-status">
+                            {{ $order->status }}
+
+                        </p>
+                        @if ($reason[$order->id] )
+                            <p>Причина отмены: {{ $reason[$order->id] }}</p>
+                        @endif
                         @if($loop->iteration==1)
                             <form method="post" action="{{ route('formdelorder') }}" class="formdelorder" name="formdelorder">
                                 @csrf
